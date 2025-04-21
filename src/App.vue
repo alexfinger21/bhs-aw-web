@@ -25,7 +25,9 @@
 
         <!-- Main Content -->
         <main>
-            <router-view></router-view>
+            <router-view>
+                <p>bello</p>
+            </router-view>
         </main>
 
         <!-- Footer -->
