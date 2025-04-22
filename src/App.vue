@@ -26,7 +26,6 @@
         <!-- Main Content -->
         <main>
             <router-view>
-                <p>bello</p>
             </router-view>
         </main>
 
