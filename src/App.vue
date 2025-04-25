@@ -5,7 +5,7 @@
             <div class="container">
                 <div class="navbar-brand">
                     <router-link to="/" class="logo">
-                        <span class="artisan-name">BHS Artisan Works</span>
+                        <p class="artisan-name">BHS Artisanal Works</p>
                     </router-link>
                     <div class="menu-toggle" @click="toggleMenu">
                         <span></span>
@@ -34,23 +34,23 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-section">
-                        <h3>Artisan's Workshop</h3>
+                        <h3 class="title">Artisan's Workshop</h3>
                         <p>Handcrafted with passion and dedication.</p>
                     </div>
                     <div class="footer-section">
-                        <h3>Quick Links</h3>
+                        <h3 class="title">Quick Links</h3>
                         <router-link to="/">Home</router-link>
                         <router-link to="/products">Products</router-link>
                         <router-link to="/order">Order</router-link>
                     </div>
                     <div class="footer-section">
-                        <h3>Contact</h3>
+                        <h3 class="title">Contact</h3>
                         <p>workshop@artisan.com</p>
                         <p>+1 (555) 123-4567</p>
                     </div>
                 </div>
                 <div class="copyright">
-                    <p>BHS Artisan Works</p>
+                    <p class="title">BHS Artisan Works</p>
                 </div>
             </div>
         </footer>
