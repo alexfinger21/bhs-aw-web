@@ -1,5 +1,5 @@
 <template>
-    <div id="app">
+    <div id="app-v">
         <!-- Top Navigation Bar -->
         <nav class="navbar">
             <div class="container">
@@ -56,3 +56,6 @@
         </footer>
     </div>
 </template>
+
+<script setup>
+</script>
