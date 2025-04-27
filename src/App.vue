@@ -5,6 +5,7 @@
             <div class="container">
                 <div class="navbar-brand">
                     <router-link to="/" class="logo">
+                        <img class="heading-img" src="./assets/imgs/logo.png"/>
                         <p class="artisan-name">BHS Artisanal Works</p>
                     </router-link>
                     <div class="menu-toggle" @click="toggleMenu">
@@ -34,8 +35,8 @@
             <div class="container">
                 <div class="footer-content">
                     <div class="footer-section">
-                        <h3 class="title">Artisan's Workshop</h3>
-                        <p>Handcrafted with passion and dedication.</p>
+                        <h3 class="title">BHS Woodworking</h3>
+                        <p>Made with 💗 by BHS Woodworking</p>
                     </div>
                     <div class="footer-section">
                         <h3 class="title">Quick Links</h3>

@@ -13,7 +13,7 @@
 const props = defineProps({
   imageUrl: {
     type: String,
-    default: "@/assets/imgs/bg.jpg", 
+    default: "@/assets/imgs/bg-1.jpg", 
   },
   imageStyle: {
     type: Object,

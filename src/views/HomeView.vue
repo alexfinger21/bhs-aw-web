@@ -4,10 +4,11 @@
     import Divider from "@/components/Divider.vue"
     import Heading from "@/components/Heading.vue"
 
+
     defineProps({
         url: {
             type: String,
-            default: String(new URL("../assets/imgs/bg.jpg", import.meta.url).href)
+            default: String(new URL("../assets/imgs/bg-1.jpg", import.meta.url).href)
         }
     })
 </script>
@@ -18,7 +19,7 @@
             <p>This is where you can order our handmade wooden cutting boards, coasters, etc</p>
         </div>
     </Section>
-    <Heading>About us</Heading>
+    <Heading text="About Us"/>
     <Divider></Divider>
     <Divider></Divider>
     <div class="img-grid">
