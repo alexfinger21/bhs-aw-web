@@ -1,5 +1,6 @@
 <template>
     <div id="app-v">
+        <NotificationBar/>
         <!-- Top Navigation Bar -->
         <nav class="navbar">
             <div class="container">
@@ -59,4 +60,5 @@
 </template>
 
 <script setup>
+    import NotificationBar from "./components/NotificationBar.vue"
 </script>

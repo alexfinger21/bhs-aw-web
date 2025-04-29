@@ -13,14 +13,20 @@
 const props = defineProps({
   imageUrl: {
     type: String,
-    default: "@/assets/imgs/bg-1.jpg", 
+    default: "@/assets/imgs/bg-1.jpg" 
+  },
+  position_y: {
+    type: String,
+    default: "40%"
+  },
+  size: {
+    type: String,
+    default: "cover"
   },
   imageStyle: {
     type: Object,
     default: () => ({
-      size: "cover",
       position: "top",
-      position_y: "40%",
       repeat: "no-repeat"
     })
   }
@@ -28,10 +34,10 @@ const props = defineProps({
 
 const computedStyle = computed(() => ({
   backgroundImage: `url(${props.imageUrl})`, 
-  backgroundSize: props.imageStyle.size,
+  backgroundSize: props.size,
   backgroundPosition: `${props.imageStyle.position} ${props.imageStyle.position_y}`,
   backgroundRepeat: props.imageStyle.repeat,
-  backgroundPositionY: props.imageStyle.position_y,
+  backgroundPositionY: props.position_y,
   paddingBottom: "1rem",
 }))
 </script>

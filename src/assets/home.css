@@ -1,27 +1,42 @@
-/* Image Grid CSS */
+/* ================ */
+/* Non-Stretching Grid System */
+/* ================ */
 .img-grid {
   display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   gap: 1.5rem;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  margin: 2rem 0;
+  justify-items: center;
   padding: 0 1rem;
+  margin: 2rem 0;
 }
 
 .grid-item {
   position: relative;
-  border-radius: 8px;
   overflow: hidden;
-  aspect-ratio: 1 / 1; /* Square items (change ratio as needed) */
+  width: 100%;
+  max-width: 300px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  background: var(--light-color); /* Your existing variable */
+  display: flex; /* New - for perfect centering */
+  justify-content: center;
+  align-items: center;
 }
 
+/* Critical image rules */
 .grid-item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
   display: block;
   transition: transform 0.3s ease;
+}
+
+/* Taller container (remove if you want natural height) */
+.grid-item--tall {
+  aspect-ratio: 1 / 1.5;
 }
 
 .grid-item:hover {
@@ -30,10 +45,10 @@
 }
 
 .grid-item:hover img {
-  transform: scale(1.05);
+  transform: scale(1.03); /* Subtler zoom to prevent distortion */
 }
 
-/* Optional overlay for captions */
+/* Overlay */
 .grid-item .overlay {
   position: absolute;
   bottom: 0;
@@ -46,21 +61,15 @@
   transition: opacity 0.3s ease;
 }
 
-.grid-item:hover .overlay {
-  opacity: 1;
-}
-
-/* Responsive adjustments */
+/* Responsive */
 @media (max-width: 768px) {
-  .image-grid {
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1rem;
+  .img-grid {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
   }
 }
 
 @media (max-width: 480px) {
-  .image-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 0.75rem;
+  .img-grid {
+    grid-template-columns: 1fr;
   }
 }
