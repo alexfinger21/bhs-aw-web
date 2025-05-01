@@ -17,10 +17,7 @@
                 </div>
                 <div class="navbar-links" :class="{ 'active': menuActive }">
                     <router-link to="/" class="nav-link">Home</router-link>
-                    <router-link to="/about" class="nav-link">About</router-link>
-                    <router-link to="/works" class="nav-link">Works</router-link>
-                    <router-link to="/workshop" class="nav-link">Workshop</router-link>
-                    <router-link to="/contact" class="nav-link">Contact</router-link>
+                    <router-link to="/order" class="nav-link">Order</router-link>
                 </div>
             </div>
         </nav>
@@ -42,7 +39,6 @@
                     <div class="footer-section">
                         <h3 class="title">Quick Links</h3>
                         <router-link to="/">Home</router-link>
-                        <router-link to="/products">Products</router-link>
                         <router-link to="/order">Order</router-link>
                     </div>
                     <div class="footer-section">
