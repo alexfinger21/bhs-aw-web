@@ -1,9 +1,13 @@
 const express = require("express")
-const router = express.Router
+const router = express.Router()
 
-router.get("/", (req, res) => {
-    return {
-        "wood thing": {
+router.get("/:id", (req, res) => {
+    const p_id = req.params.id
+    console.log(p_id)
+
+    return res.send([
+        "wood thing", {
+            id: 0,
             sizes: {
                 "small": 1,
                 "big": 2,
@@ -14,7 +18,7 @@ router.get("/", (req, res) => {
                 "metal": 1.5
             }
         }
-    }
+    ])
 })
 
 module.exports = router
