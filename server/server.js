@@ -14,6 +14,7 @@ const apiDir = "api"
 
 // ROUTERS
 const productsRouter = require(path.resolve(serverDir, routersDir, apiDir, "products.js"))
+const notifRouter = require(path.resolve(serverDir, routersDir, apiDir, "notif.js"))
 
 const corsOptions = {
     origin: '*',
@@ -43,6 +44,7 @@ app.use((req, res, next) => {
 // routers
 
 app.use("/api/products", productsRouter)
+app.use("/api/notif", notifRouter)
 
 app.listen(process.env.PORT, (p) => {
     console.log("LISTENING ON PORT " + process.env.PORT)

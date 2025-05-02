@@ -50,6 +50,7 @@ body {
 }
 
 .notification-link {
+    background-color: default;
     color: white;
     font-weight: 700;
     text-decoration: underline;
@@ -116,8 +117,8 @@ body {
     top: 0;
     z-index: 1000;
     
-    /* Replace outer shadow with inner shadow */
-    box-shadow: inset 0 -2px 4px rgba(62, 39, 35, 0.1); /* Using your --dark-color with opacity */
+    /* Drop shadow instead of inner shadow */
+    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.1); /* Using your --dark-color with opacity */
     
     /* Optional: Add subtle top highlight */
     border-top: 1px solid rgba(255, 255, 255, 0.2);
@@ -179,10 +180,6 @@ body {
 
 .nav-link:hover {
     background-color: var(--accent-color);
-}
-
-.router-link-exact-active {
-    background-color: var(--primary-color);
 }
 
 .menu-toggle {
@@ -268,6 +265,10 @@ body {
 
 .section {
     padding: 4rem 0;
+    box-shadow: 0 4px 8px rgba(166, 124, 82, 0.15); /* Using your --accent-color with opacity */
+    position: relative; /* Ensures shadow appears properly */
+    z-index: 1; /* Places above other elements */
+    background-color: var(--primary-color); /* Ensures shadow is visible */
 }
 
 .section-title {

@@ -17,6 +17,7 @@
     })
 </script>
 <template>
+    <Divider/>
     <Section :imageUrl="url1">
         <h1>Welcome 👋</h1>
         <div class="txt-block">
