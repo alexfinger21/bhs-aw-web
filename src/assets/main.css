@@ -7,13 +7,12 @@
 @import url("https://fonts.googleapis.com/css2?family=Funnel+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 :root {
-    --primary-color: #FFFFFF; /* white */
-    --secondary-color: #D2B48C; /* Tan */
-    --accent-color: #A67C52; /* Darker brown */
-    --light-color: #F5F5DC; /* Beige */
-    --dark-color: #3E2723; /* Dark brown */
-    --text-color: #1E2C24;
-    --text-light: #264031;
+    --primary-color: #3E2723; /* Dark brown (main brand color) */
+    --primary-light: #5D4037; /* Lighter brown for accents */
+    --primary-lighter: #8D6E63; /* Even lighter for subtle highlights */
+    --text-color: #FFFFFF; /* White text for contrast */
+    --text-secondary: #F5F5F5; /* Slightly off-white for secondary text */
+    --background: #EFEBE9; /* Very light beige for page background */
     --title-font: "Kirang Haerang";
     --web-font: "Funnel Sans";
 }
@@ -24,34 +23,33 @@
     box-sizing: border-box;
 }
 
-
 body {
     font-family: var(--web-font), sans-serif;
     color: var(--text-color);
     opacity: 1; 
     line-height: 1.6;
+    background-color: var(--background);
 }
 
 /* ================ */
 /* Notification Bar */
 /* ================ */
 .notification-bar {
-    background-color: rgba(35, 49, 41, 0.9); /* Green color */
-    color: white;
+    background-color: var(--primary-light);
+    color: var(--text-color);
     text-align: center;
     padding: 0.75rem 1rem;
     font-family: var(--web-font);
     font-weight: 500;
     position: sticky;
     top: 0;
-    z-index: 1100; /* Above navbar */
+    z-index: 1100;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     animation: fadeIn 0.5s ease-out;
 }
 
 .notification-link {
-    background-color: default;
-    color: white;
+    color: var(--text-secondary);
     font-weight: 700;
     text-decoration: underline;
     margin-left: 0.5rem;
@@ -59,7 +57,7 @@ body {
 }
 
 .notification-link:hover {
-    color: var(--light-color);
+    color: var(--text-color);
     text-decoration: none;
 }
 
@@ -70,13 +68,13 @@ body {
 
 /* Adjust navbar position */
 .navbar {
-    top: 40px; /* Match notification bar height */
+    top: 40px;
 }
 
 .notification-close {
     background: none;
     border: none;
-    color: white;
+    color: var(--text-color);
     font-size: 1.5rem;
     line-height: 1;
     cursor: pointer;
@@ -89,7 +87,7 @@ body {
 }
 
 .notification-close:hover {
-    color: var(--light-color);
+    color: var(--text-secondary);
 }
 
 #app-v {
@@ -105,31 +103,24 @@ body {
     margin: 0 auto;
 }
 
-
 /* ================ */
 /* Navigation */
 /* ================ */
 .navbar {
     background-color: var(--primary-color);
-    color: var(--text-light);
+    color: var(--text-color);
     padding: 1rem 0;
     position: sticky;
     top: 0;
     z-index: 1000;
-    
-    /* Drop shadow instead of inner shadow */
-    box-shadow: 0 2px 4px rgba(62, 39, 35, 0.1); /* Using your --dark-color with opacity */
-    
-    /* Optional: Add subtle top highlight */
-    border-top: 1px solid rgba(255, 255, 255, 0.2);
-    
-    /* Keep existing properties */
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    border-top: 1px solid var(--primary-lighter);
     transition: all 0.3s ease;
 }
 
 /* For mobile menu when active */
 .navbar-links.active {
-    box-shadow: inset 0 2px 4px rgba(62, 39, 35, 0.1); /* Inner shadow at bottom */
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .navbar-brand {
@@ -141,7 +132,7 @@ body {
 .logo {
     display: flex;
     align-items: center;
-    color: var(--text-light);
+    color: var(--text-color);
     text-decoration: none;
     font-weight: 700;
     font-family: var(--title-font);
@@ -156,7 +147,7 @@ body {
 .navbar-links {
     display: flex;
     flex-direction: column;
-    background-color: var(--dark-color);
+    background-color: var(--primary-light);
     position: absolute;
     top: 100%;
     left: 0;
@@ -171,7 +162,7 @@ body {
 }
 
 .nav-link {
-    color: var(--text-light);
+    color: var(--text-color);
     text-decoration: none;
     padding: 0.8rem;
     text-align: center;
@@ -179,7 +170,7 @@ body {
 }
 
 .nav-link:hover {
-    background-color: var(--accent-color);
+    background-color: var(--primary-lighter);
 }
 
 .menu-toggle {
@@ -195,17 +186,16 @@ body {
     display: block;
     height: 3px;
     width: 100%;
-    background-color: var(--text-light);
+    background-color: var(--text-color);
     transition: all 0.3s;
 }
 
 /* ================ */
 /* Footer */
 /* ================ */
-
 .footer {
     background-color: var(--primary-color);
-    color: var(--text-light);
+    color: var(--text-color);
     padding: 2rem 0;
 }
 
@@ -237,13 +227,13 @@ body {
 }
 
 .footer-section a:hover {
-    color: var(--text-light);
+    color: var(--text-secondary);
 }
 
 .copyright {
     text-align: center;
     padding-top: 1rem;
-    border-top: 1px solid var(--accent-color);
+    border-top: 1px solid var(--primary-light);
 }
 
 /* ================ */
@@ -251,8 +241,8 @@ body {
 /* ================ */
 .btn {
     display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
+    background-color: var(--primary-light);
+    color: var(--text-color);
     padding: 0.8rem 1.5rem;
     text-decoration: none;
     border-radius: 4px;
@@ -260,22 +250,22 @@ body {
 }
 
 .btn:hover {
-    background-color: var(--accent-color);
+    background-color: var(--primary-lighter);
 }
 
 .section {
     padding: 4rem 0;
-    box-shadow: 0 4px 8px rgba(166, 124, 82, 0.15); /* Using your --accent-color with opacity */
-    position: relative; /* Ensures shadow appears properly */
-    z-index: 1; /* Places above other elements */
-    background-color: var(--primary-color); /* Ensures shadow is visible */
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    position: relative;
+    z-index: 1;
+    background-color: var(--primary-color);
 }
 
 .section-title {
     text-align: center;
     margin-bottom: 2rem;
     font-size: 2rem;
-    color: var(--primary-color);
+    color: var(--text-color);
 }
 
 .txt-block {
@@ -286,19 +276,19 @@ body {
     font-weight: 500;
     opacity: 1;
     width: 40%;
-    color: var(--primary-color);
-    background-color: rgba(35, 49, 41, 0.9);
+    color: var(--text-color);
+    background-color: var(--primary-light);
 }
 
 h1 {
-    color: var(--primary-color);
+    color: var(--text-color);
     display: inline-block;
     margin-top: 0.5rem;
     margin-left: 2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 3rem;
-    background-color: rgba(35, 49, 41, 0.9);
+    background-color: var(--primary-light);
     width: auto;
 }
 
@@ -314,21 +304,20 @@ h1 {
 
 .heading {
     font-family: var(--web-font), sans-serif;
-    color: var(--primary-color);
+    color: var(--text-color);
     display: inline-block;
     margin-top: 2rem;
     margin-left: 2rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 2rem;
-    background-color: rgba(35, 49, 41, 0.9);
+    background-color: var(--primary-light);
     width: auto;
 }
 
 /* ================ */
 /* Page Sections */
 /* ================ */
-
 .about-content {
     display: grid;
     grid-template-columns: 1fr;

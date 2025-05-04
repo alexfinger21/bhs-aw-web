@@ -13,8 +13,8 @@
 
 .main-image {
   height: 400px;
-  background-color: var(--light-color);
-  border: 1px solid rgba(166, 124, 82, 0.2);
+  background-color: var(--background);
+  border: 1px solid var(--primary-lighter);
 }
 
 .product-info {
@@ -23,9 +23,10 @@
 
 .price {
   font-size: 1.75rem;
-  color: var(--accent-color);
+  color: var(--primary-light);
   margin: 1rem 0;
   font-weight: 700;
+  display: inline-block;
 }
 
 .description {
@@ -42,17 +43,21 @@
   margin-bottom: 1.5rem;
 }
 
+h1 {
+    margin-left: 0;
+}
+
 .option-group label {
   display: block;
   margin-bottom: 0.5rem;
   font-weight: 500;
-  color: var(--text-light);
+  color: var(--primary-light);
 }
 
 .artisan-select {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid rgba(166, 124, 82, 0.3);
+  border: 1px solid var(--primary-lighter);
   background-color: var(--primary-color);
   font-family: var(--web-font);
   color: var(--text-color);
@@ -62,13 +67,13 @@
 
 .artisan-select:focus {
   outline: none;
-  border-color: var(--accent-color);
-  box-shadow: 0 0 0 2px rgba(166, 124, 82, 0.2);
+  border-color: var(--primary-lighter);
+  box-shadow: 0 0 0 2px rgba(141, 110, 99, 0.3);
 }
 
 .checkout-btn {
-  background-color: var(--accent-color);
-  color: white;
+  background-color: var(--primary-light);
+  color: var(--text-color);
   border: none;
   padding: 1rem 2rem;
   font-family: var(--web-font);
@@ -80,7 +85,7 @@
 }
 
 .checkout-btn:hover {
-  background-color: var(--dark-color);
+  background-color: var(--primary-lighter);
 }
 
 @media (min-width: 768px) {
@@ -103,8 +108,8 @@
 .loading-spinner {
   width: 40px;
   height: 40px;
-  border: 4px solid var(--light-color);
-  border-top: 4px solid var(--accent-color);
+  border: 4px solid var(--background);
+  border-top: 4px solid var(--primary-light);
   border-radius: 50%;
   animation: spin 1s linear infinite;
 }
@@ -117,31 +122,27 @@
 .error-message {
   text-align: center;
   padding: 2rem;
-  color: var(--accent-color);
+  color: var(--primary-light);
   font-size: 1.2rem;
 }
 
 /* Placeholder styles */
 .image-placeholder {
   height: 400px;
-  background-color: var(--light-color);
-  border: 1px dashed rgba(166, 124, 82, 0.3);
+  background-color: var(--background);
+  border: 1px dashed var(--primary-lighter);
 }
 
 .select-placeholder {
   height: 40px;
-  background-color: var(--light-color);
-  border: 1px dashed rgba(166, 124, 82, 0.3);
+  background-color: var(--background);
+  border: 1px dashed var(--primary-lighter);
   border-radius: 4px;
 }
 
 /* Disabled button state */
 .checkout-btn:disabled {
-  background-color: #cccccc;
+  background-color: var(--primary-lighter);
+  opacity: 0.7;
   cursor: not-allowed;
-}
-
-/* Existing product styles remain the same */
-.product-detail {
-  /* ... your existing styles ... */
 }

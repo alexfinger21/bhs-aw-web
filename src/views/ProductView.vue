@@ -21,6 +21,7 @@
     <div class="product-info">
       <h1>{{ name || 'Loading...' }}</h1>
       <template v-if="product.sizes">
+        <Divider/>
         <p class="price">${{ selectedSize ? product.sizes[selectedSize] : '--' }}</p>
         
         <div class="options">
@@ -60,6 +61,7 @@ import "@/assets/product.css"
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import axios from "axios"
+import Divider from "../components/Divider.vue"
 
 const route = useRoute()
 const productId = parseInt(route.params.id)
