@@ -6,6 +6,7 @@ const fs = require("fs")
 const cors = require("cors")
 require("dotenv").config()
 
+const adminUri = "mongodb://adminUser:yourAdminPassword@localhost:27017/admin?authSource=admin";
 
 //DIRS
 const serverDir = "./"
