@@ -4,9 +4,8 @@ const { createSSRApp } = require("vue")
 const { renderToString } = require("@vue/server-renderer")
 const fs = require("fs")
 const cors = require("cors")
+const { MongoClient } = require("mongodb")
 require("dotenv").config()
-
-const adminUri = "mongodb://adminUser:yourAdminPassword@localhost:27017/admin?authSource=admin";
 
 //DIRS
 const serverDir = "./"

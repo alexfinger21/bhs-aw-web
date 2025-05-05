@@ -24,7 +24,7 @@ function getDB() {
     return new Promise(async (res, rej) => {
         const db_client = await getConnection()
 
-        const db = client.db("bhs-woodworking")
+        const db = db_client.db("bhs-woodworking")
         return res(db)
     })
 }
