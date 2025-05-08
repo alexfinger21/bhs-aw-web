@@ -4,7 +4,7 @@ const router = express.Router()
 
 router.get("/", async (req, res) => {
     const client = await getDB()
-    const prods = client.getCollection("products").pretty()
+    const prods = await client.collection("products").find({}).toArray()
     
     res.send(prods)
 })

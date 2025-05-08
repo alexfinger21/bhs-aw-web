@@ -25,6 +25,7 @@ function getDB() {
         const db_client = await getConnection()
 
         const db = db_client.db("bhs-woodworking")
+        const findRes = await db.collection("products").find({}).toArray()
         return res(db)
     })
 }
