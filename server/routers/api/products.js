@@ -5,6 +5,7 @@ const router = express.Router()
 router.get("/", async (req, res) => {
     const client = await getDB()
     const prods = await client.collection("products").find({}).toArray()
+    console.log(prods)
     
     res.send(prods)
 })
@@ -27,6 +28,10 @@ router.get("/:id", (req, res) => {
             }
         }
     ])
+})
+
+router.post("/:id/buy", (req, res) => {
+    //query db, send email for now prob
 })
 
 module.exports = router
