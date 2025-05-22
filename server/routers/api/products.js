@@ -5,7 +5,8 @@ const router = express.Router()
 router.get("/", async (req, res) => {
     const client = await getDB()
     const prods = await client.collection("products").find({}).toArray()
-    console.log(prods)
+
+    console.log("PRODS", prods)
     
     res.send(prods)
 })

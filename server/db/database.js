@@ -25,6 +25,17 @@ function getDB() {
         const db_client = await getConnection()
 
         const db = db_client.db("bhs-woodworking")
+
+        /* 
+            const result = await db.collection("products").insertOne({
+                name: "Cutting Board", 
+                id: 0, 
+                starting_p: 15,
+                sizes: {"small": 0, "medium": 2 , "large": 4}
+            })
+            */ 
+
+            //console.log(findRes)
         return res(db)
     })
 }

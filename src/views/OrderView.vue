@@ -10,15 +10,15 @@
     
     <div class="product-grid">
       <div 
-        v-for="[name, product] in Object.entries(products)" 
+        v-for="product in products" 
         :key="product.id" 
         class="product-card"
         @click="viewProduct(product.id)"
       >
         <div class="product-image"></div>
         <div class="product-details">
-          <h3 class="product-title">{{ name }}</h3>
-          <p class="product-price">From ${{ Object.values(product.sizes).slice().sort((a, b) => a - b)[0]}}</p>
+          <h3 class="product-title">{{ product.name }}</h3>
+          <p class="product-price">From ${{ product.starting_p + Object.values(product.sizes).slice().sort((a, b) => a - b)[0]}}</p>
           <button class="btn" @click.stop="viewProduct(product.id)">View Options</button>
         </div>
       </div>
@@ -46,6 +46,7 @@ defineProps({
 const products = ref({}) 
 onMounted(async () => {
     const res = await axios.get("http://localhost:3001/api/products")
+    res.data = res.data.filter(e => e.name != "test")
     products.value = res.data 
     console.log(products)
 })
