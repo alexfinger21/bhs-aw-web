@@ -3,8 +3,9 @@ import { createApp } from "vue"
 import App from "./App.vue"
 import router from "./js/router"
 import { provideStoreToApp } from "@reduxjs/vue-redux"
+import store from "./js/store.js"
 
 const app = createApp(App)
-provideStoreToApp(app)
-app.use(router).mount('#app')
+provideStoreToApp(app, { store })
+app.use(router).mount("#app")
     

@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@reduxjs/toolkit": "^2.8.2",
     "@reduxjs/vue-redux": "^1.0.1",
     "@vue/cli-service": "^5.0.8",
     "axios": "^1.9.0",
