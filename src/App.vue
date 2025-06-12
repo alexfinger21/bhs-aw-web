@@ -48,7 +48,7 @@
                     </div>
                 </div>
                 <div class="copyright">
-                    <p class="title">BHS Artisan Works</p>
+                    <p class="title">BHS Artisanal Works</p>
                 </div>
             </div>
         </footer>
