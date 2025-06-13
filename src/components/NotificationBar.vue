@@ -1,19 +1,42 @@
 <script setup>
-import { ref, onMounted } from "vue"
+import { ref, onMounted, watch } from "vue"
 import axios from "axios"
 
-const notification = ref({
+const empty_notif = {
     visible: false,
     message: "",
     link: "",
     linkText: ""
-})
+}
+
+const notification = ref(empty_notif)
 
 onMounted(async () => {
-    const res = await axios.get("http://localhost:3001/api/notif/now") 
-    console.log("notif", res)
-    notification.value = res.data
+    let res = null
+    try {
+        res = await axios.get("http://localhost:3001/api/notif/now") 
+        console.log("notif", res)
+    } catch (err) {
+        console.log("notif err", err)
+    }
+    notification.value = res?.data ?? empty_notif
 })
+
+watch(
+    () => notification.value.visible,
+    () => {
+        if (!notification.value.visible) {
+            if (document.readyState != "complete") {
+                document.addEventListener("DOMContentLoaded", (event) => { 
+                    document.querySelector(".navbar").style.top = "0"
+                })
+            } else {
+                document.querySelector(".navbar").style.top = "0"
+            }
+        }
+    },
+    {immediate: true}
+)
 
 function dismissNotification() {
     notification.value.visible = false
