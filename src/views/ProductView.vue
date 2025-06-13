@@ -1,6 +1,6 @@
 <template>
     <!-- Loading state -->
-    <div>
+    <div style="color: black">
         {{ cart?.[0]?.["product"] ?? "ok" }}
     </div>
     <div v-if="loading" class="loading-container">
