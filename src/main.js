@@ -8,4 +8,3 @@ import store from "./js/store.js"
 const app = createApp(App)
 provideStoreToApp(app, { store })
 app.use(router).mount("#app")
-    
