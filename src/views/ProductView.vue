@@ -1,8 +1,5 @@
 <template>
     <!-- Loading state -->
-    <div style="color: black">
-        {{ cart?.[0]?.["product"] ?? "ok" }}
-    </div>
     <div v-if="loading" class="loading-container">
         <div class="loading-spinner"></div>
     </div>

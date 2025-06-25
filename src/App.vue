@@ -25,8 +25,8 @@
                     </div>
                 </div>
                 <div class="navbar-links" :class="{ 'active': menuActive }">
-                    <router-link to="/" class="nav-link">Home</router-link>
-                    <router-link to="/order" class="nav-link">Order</router-link>
+                    <router-link to="/" class="nav-link" @click="navClick">Home</router-link>
+                    <router-link to="/order" class="nav-link" @click="navClick">Order</router-link>
                 </div>
             </div>
         </nav>
@@ -73,5 +73,9 @@
     
     const toggleMenu = () => {
         menuActive.value = !menuActive.value
+    }
+
+    const navClick = () => {
+        menuActive.value = false
     }
 </script>

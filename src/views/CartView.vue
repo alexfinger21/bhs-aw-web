@@ -15,7 +15,7 @@
             <th scope="row">{{ product.product }} - {{ product.size }}</th>
             <td >${{ product.price }}</td>
             <td >{{ product.quantity }}</td>
-            <td >{{ product.quantity * product.price }}</td>
+            <td >${{ product.quantity * product.price }}</td>
             </tr> 
         </tbody>
     </table>

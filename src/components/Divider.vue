@@ -1,5 +1,5 @@
 <template>
-  <div class="divider" :class="orientation" :style="dividerStyle"></div>
+  <div class="divider" :style="dividerStyle"></div>
 </template>
 
 <script setup>

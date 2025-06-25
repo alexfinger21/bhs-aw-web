@@ -8,7 +8,7 @@
     </Section>
     <Divider/>
     
-    <div class="product-grid">
+    <div v-if="products" class="product-grid">
       <div 
         v-for="product in products" 
         :key="product.id" 
@@ -22,6 +22,9 @@
           <button class="btn" @click.stop="viewProduct(product.id)">View Options</button>
         </div>
       </div>
+    </div>
+    <div v-else>
+        <h4>Hmm... no products found - Check your internet connection or report a bug</h4>
     </div>
   </div>
 </template>
@@ -45,10 +48,14 @@ defineProps({
 
 const products = ref({}) 
 onMounted(async () => {
-    const res = await axios.get("http://localhost:3001/api/products")
-    res.data = res.data.filter(e => e.name != "test")
-    products.value = res.data 
-    console.log(products)
+    try {
+        const res = await axios.get("http://localhost:3001/api/products")
+        res.data = res.data.filter(e => e.name != "test")
+        products.value = res.data 
+    } catch (err) {
+        console.warn("NET ERR", err)
+        products.value = null
+    }
 })
 console.log(products)
 const viewProduct = (id) => {
