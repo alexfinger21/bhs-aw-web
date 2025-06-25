@@ -22,10 +22,10 @@
         </div>
 
         <div class="product-info">
-            <h1>{{ name || 'Loading...' }}</h1>
+            <h1>{{ product?.name || 'Loading...' }}</h1>
             <template v-if="product.sizes">
                 <Divider/>
-                <p class="price">${{ selectedSize ? product.sizes[selectedSize] : '--' }}</p>
+                <p class="price">${{ selectedSize ? product.starting_p + product.sizes[selectedSize] : '--' }}</p>
 
                 <div class="options">
                     <div class="option-group">
@@ -71,7 +71,6 @@ import { add as cartAdd, remove as cartRemove } from "../js/cart-slice.js"
 const route = useRoute()
 const productId = parseInt(route.params.id)
 
-const name = ref("")
 const product = ref({})
 const loading = ref(true)
 const error = ref(null)
@@ -89,9 +88,8 @@ onMounted(async () => {
     try {
         const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
         console.log(res.data)
-        name.value = res.data[0]
-        product.value = res.data[1]
-        selectedSize.value = Object.keys(res.data[1].sizes)[0] // Set first size as default
+        product.value = res.data
+        selectedSize.value = Object.keys(res.data.sizes)[0] // Set first size as default
     } catch (err) {
         console.error("Failed to fetch product:", err)
         error.value = err.message
@@ -104,9 +102,9 @@ const addToCart = () => {
     if (!productLoaded.value) return
 
     dispatch(cartAdd({
-        product: name.value,
+        product: product.value.name,
         size: selectedSize.value,
-        price: product.value.sizes[selectedSize.value]
+        price: product.value.starting_p + product.value.sizes[selectedSize.value]
     })) 
 }
 

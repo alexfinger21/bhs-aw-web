@@ -9,7 +9,26 @@ export const cartSlice = createSlice({
     initialState: initialState,
     reducers: {
         add: (state, action) => {
-            state.container.push(action.payload)
+            let f_idx = -1
+            for (const idx in state.container) {
+                let f = false
+                for (const prop in action.payload) {
+                    if (action.payload[prop] != state.container[idx][prop]) {
+                        f = true
+                        break
+                    }
+                }
+
+                if (!f) {
+                    f_idx = idx
+                    break
+                }
+            }
+            if (f_idx == -1) {
+                state.container.push(Object.assign(action.payload, {quantity: 1}))
+            } else {
+                ++state.container[f_idx].quantity
+            }
             localStorage.setItem("cart", JSON.stringify(state))
         },
         remove: (state, action) => {
