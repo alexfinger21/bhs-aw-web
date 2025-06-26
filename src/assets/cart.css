@@ -1,13 +1,93 @@
-.order-table {
-    border: 2px solid rgb(140, 140, 140);
-    width: 60%;
-    border-radius: 5px;
-    color: rgb(100, 100, 100); 
-    margin-top: 2%;
-    margin-left: 5%;
-    text-align: left;
-    border-spacing:  1em;
+.cart-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2% 5%;
+    gap: 0 5%;
+    align-items: flex-start;
+    font-family: var(--web-font);
 }
 
-.order-table thead {
+/* Original table styling */
+.order-table {
+    border: 2px solid rgb(140, 140, 140);
+    border-radius: 5px;
+    color: rgb(100, 100, 100);
+    text-align: left;
+    border-spacing: 1em;
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+/* Checkout panel */
+.checkout-panel {
+    border: 2px solid rgb(140, 140, 140);
+    border-radius: 5px;
+    padding: 20px;
+    color: rgb(100, 100, 100);
+    width: 100%;
+}
+
+.checkout-panel h3 {
+    margin-top: 0;
+    border-bottom: 1px solid rgb(140, 140, 140);
+    padding-bottom: 10px;
+}
+
+.summary-row {
+    display: flex;
+    justify-content: space-between;
+    margin: 15px 0;
+}
+
+.summary-row.total {
+    font-weight: bold;
+    border-top: 1px solid rgb(140, 140, 140);
+    padding-top: 10px;
+}
+
+.checkout-button {
+    width: 100%;
+    padding: 10px;
+    background-color: var(--primary-light);
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    font-family: var(--web-font);
+    transition: all 0.2s ease;
+}
+
+.grey-out {
+    cursor: not-allowed;
+    background-color: rgb(100, 100, 100);
+}
+
+.checkout-button:hover {
+    background-color: rgb(100, 100, 100);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Desktop layout (side by side) */
+@media (min-width: 992px) {
+    .cart-container {
+        flex-wrap: nowrap;
+    }
+    .order-table {
+        width: 65%;
+        margin-bottom: 0;
+    }
+    .checkout-panel {
+        width: 30%;
+        position: sticky;
+        top: 20px;
+    }
+}
+
+/* Mobile layout adjustments */
+@media (max-width: 991px) {
+    .cart-container {
+        gap: 0;
+    }
 }
