@@ -201,6 +201,20 @@ h1 {
     transition: all 0.3s ease;
 }
 
+.upload-button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: var(--web-font);
+}
+
 .qty-btn:hover {
     background-color: var(--primary-lighter);
     color: white;
@@ -228,6 +242,10 @@ h1 {
 
 .checkout-btn:hover {
     background-color: var(--primary-light);
+}
+
+.hidden-input {
+    display: none;
 }
 
 .product-details {

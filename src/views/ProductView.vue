@@ -61,7 +61,7 @@
                 </div>
             </div>
             
-            <template v-if="product.sizes">
+            <template v-if="product?.sizes">
                 <Divider/>
                 <p class="price">${{ selectedSize ? (product.starting_p + product.sizes[selectedSize]).toFixed(2) : '--' }}</p>
                 <p class="product-description">{{ product.description }}</p>
@@ -85,6 +85,35 @@
                         <div v-else class="select-placeholder"></div>
                     </div>
                 </div>
+            </template>
+
+            <template v-if="product?.allow_custom">
+                <input 
+                    type="file"
+                    ref="fileInput"
+                    accept="image/*"
+                    @change="handleFileUpload"
+                    class="hidden-input"
+                />
+
+                <div class="options">
+                    <div class="option-group">
+                        <label>Custom design:</label>
+                    </div>
+                </div>
+                <button 
+                    @click="triggerFileInput"
+                    class="upload-button"
+                    >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                        <line x1="16" y1="5" x2="22" y2="5"></line>
+                        <line x1="19" y1="2" x2="19" y2="8"></line>
+                        <circle cx="9" cy="9" r="2"></circle>
+                        <path d="M21 15c-3.87-3.87-9-5-9-5s-1.13 4.13-5 9"></path>
+                    </svg>
+                    Upload Image
+                </button>  
             </template>
 
             <div class="product-actions">
@@ -142,7 +171,9 @@ const productId = parseInt(route.params.id)
 const product = ref({
     images: [] 
 })
+
 const loading = ref(true)
+const fileInput = ref(null) 
 const error = ref(null)
 const selectedSize = ref(null)
 const qty1Color = ref("red")
@@ -166,7 +197,7 @@ onMounted(async () => {
         const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
         product.value = {
             ...res.data,
-            images: res.data.images || [res.data.image] // Fallback to single image if no array
+            images: Object.values(res.data.imgs) || [res.data.image] // Fallback to single image if no array
         }
         selectedSize.value = Object.keys(res.data.sizes)[0] // Set first size as default
     } catch (err) {
@@ -178,10 +209,11 @@ onMounted(async () => {
 })
 
 const nextImage = () => {
-    if (currentImageIndex.value < product.value.images.length - 1) {
+    if (currentImageIndex.value < Object.keys(product.value.images).length - 1) {
         ++currentImageIndex.value
         imageLoaded.value = false
     }
+    console.log(product.value.images)
 }
 
 const prevImage = () => {
@@ -189,6 +221,16 @@ const prevImage = () => {
         --currentImageIndex.value
         imageLoaded.value = false
     }
+}
+
+const triggerFileInput = () => {
+    fileInput.value.click()
+}
+
+const handleFileUpload = (event) => {
+    const file = event.target.files?.[0]
+
+    if (!file) return;
 }
 
 const incrementQuantity = () => {
