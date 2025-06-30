@@ -12,17 +12,59 @@
     <!-- Loaded state -->
     <div v-else class="product-detail">
         <div class="product-gallery">
-            <div class="main-image" v-if="product.image">
-                <!-- Image will appear here when loaded -->
+            <div class="image-carousel">
+                <button class="carousel-btn prev" @click="prevImage" :disabled="currentImageIndex === 0">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>
+                </button>
+                
+                <div class="main-image-container">
+                    <transition name="fade" mode="out-in">
+                        <img 
+                            :key="currentImageIndex"
+                            :src="product.images[currentImageIndex]" 
+                            :alt="product.name"
+                            class="main-image"
+                            @load="imageLoaded = true"
+                        />
+                    </transition>
+                    <div v-if="!imageLoaded" class="image-placeholder"></div>
+                </div>
+                
+                <button class="carousel-btn next" @click="nextImage" :disabled="currentImageIndex === product.images.length - 1">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>
+                </button>
             </div>
-            <div v-else class="image-placeholder"></div>
+            
+            <div class="thumbnail-container">
+                <div 
+                    v-for="(image, index) in product.images" 
+                    :key="index"
+                    class="thumbnail"
+                    :class="{ active: currentImageIndex === index }"
+                    @click="currentImageIndex = index"
+                >
+                    <img :src="image" :alt="`Thumbnail ${index + 1}`" />
+                </div>
+            </div>
         </div>
 
         <div class="product-info">
-            <h1>{{ product?.name || 'Loading...' }}</h1>
+            <div class="product-header">
+                <h1>{{ product?.name || 'Loading...' }}</h1>
+                <div class="product-meta">
+                    <span class="product-sku">SKU: {{ product?.id ?? 'N/A' }}</span>
+                    <span class="product-rating">★★★★★ (reviews coming soon)</span>
+                </div>
+            </div>
+            
             <template v-if="product.sizes">
                 <Divider/>
-                <p class="price">${{ selectedSize ? product.starting_p + product.sizes[selectedSize] : '--' }}</p>
+                <p class="price">${{ selectedSize ? (product.starting_p + product.sizes[selectedSize]).toFixed(2) : '--' }}</p>
+                <p class="product-description">{{ product.description }}</p>
 
                 <div class="options">
                     <div class="option-group">
@@ -31,27 +73,56 @@
                             v-model="selectedSize" 
                             class="artisan-select"
                             v-if="product.sizes"
-                            >
+                        >
                             <option 
-                            v-for="[size, price] of Object.entries(product.sizes)" 
-                            :value="size"
-                            :key="size"
+                                v-for="[size, price] of Object.entries(product.sizes)" 
+                                :value="size"
+                                :key="size"
                             >
-                            {{ size }} (+${{ price }})
+                                {{ size }} (+${{ price }})
                             </option>
                         </select>
-                            <div v-else class="select-placeholder"></div>
+                        <div v-else class="select-placeholder"></div>
                     </div>
                 </div>
             </template>
 
-            <button 
-                class="checkout-btn" 
-                @click="addToCart"
-                :disabled="!productLoaded"
+            <div class="product-actions">
+                <div class="quantity-selector">
+                    <button :style="{ color: qty1Color }" class="qty-btn" @click="decrementQuantity">−</button>
+                    <span class="quantity">{{ quantity }}</span>
+                    <button :style="{ color: qty2Color }" class="qty-btn" @click="incrementQuantity">+</button>
+                </div>
+                <button 
+                    class="checkout-btn" 
+                    @click="addToCart"
+                    :disabled="!productLoaded"
                 >
-                {{ productLoaded ? 'Add to Cart' : 'Loading...' }}
-            </button>
+                    {{ productLoaded ? 'Add to Cart' : 'Loading...' }}
+                </button>
+            </div>
+            
+            <div class="product-details">
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Handcrafted in our workshop</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"></path>
+                    </svg>
+                    <span>Natural wood variations expected</span>
+                </div>
+                <div class="detail-item">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+                    </svg>
+                    <span>Made with super high quality ancient wood</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -68,14 +139,23 @@ import { add as cartAdd, remove as cartRemove } from "../js/cart-slice.js"
 const route = useRoute()
 const productId = parseInt(route.params.id)
 
-const product = ref({})
+const product = ref({
+    images: [] 
+})
 const loading = ref(true)
 const error = ref(null)
 const selectedSize = ref(null)
+const qty1Color = ref("red")
+const qty2Color = ref("")
+const currentImageIndex = ref(0)
+const imageLoaded = ref(false)
+const quantity = ref(1)
 const dispatch = useDispatch()
 const cart = useSelector(state => {
     return state.cart.container
 })
+
+const MAX_Q = 5
 
 const productLoaded = computed(() => {
     return product.value && Object.keys(product.value).length > 0
@@ -84,8 +164,10 @@ const productLoaded = computed(() => {
 onMounted(async () => {
     try {
         const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
-        console.log(res.data)
-        product.value = res.data
+        product.value = {
+            ...res.data,
+            images: res.data.images || [res.data.image] // Fallback to single image if no array
+        }
         selectedSize.value = Object.keys(res.data.sizes)[0] // Set first size as default
     } catch (err) {
         console.error("Failed to fetch product:", err)
@@ -95,14 +177,55 @@ onMounted(async () => {
     }
 })
 
+const nextImage = () => {
+    if (currentImageIndex.value < product.value.images.length - 1) {
+        ++currentImageIndex.value
+        imageLoaded.value = false
+    }
+}
+
+const prevImage = () => {
+    if (currentImageIndex.value > 0) {
+        --currentImageIndex.value
+        imageLoaded.value = false
+    }
+}
+
+const incrementQuantity = () => {
+    quantity.value = Math.min(5, quantity.value + 1)
+    
+    if (qty2Color.value != "red") {
+        if (quantity.value == MAX_Q) {
+            qty1Color.value = qty2Color.value 
+            qty2Color.value = "red" 
+        } else {
+            qty1Color.value = qty2Color.value 
+        }
+    }
+}
+
+const decrementQuantity = () => {
+    quantity.value = Math.max(1, quantity.value - 1)
+    if (qty1Color.value != "red") {
+        if (quantity.value == 1) {
+            qty2Color.value = qty1Color.value 
+            qty1Color.value = "red" 
+        } else {
+            qty2Color.value = qty1Color.value 
+        }
+    }
+}
+
 const addToCart = () => {
     if (!productLoaded.value) return
 
-    dispatch(cartAdd({
-        product: product.value.name,
-        size: selectedSize.value,
-        price: product.value.starting_p + product.value.sizes[selectedSize.value]
-    })) 
+    for (let i = 0; i<quantity.value; ++i) {
+        dispatch(cartAdd({
+            product: product.value.name,
+            size: selectedSize.value,
+            price: product.value.starting_p + product.value.sizes[selectedSize.value],
+        })) 
+    }
 }
-
 </script>
+
