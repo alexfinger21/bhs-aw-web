@@ -3,7 +3,7 @@
         <table class="order-table">
             <thead>
                 <tr>
-                    <th scope="col" style="width: 10%">Image</th>
+                    <th scope="col" style="width: 10%">Design</th>
                     <th scope="col" style="width: 30%">Product</th>
                     <th scope="col" style="width: 20%">Price</th>
                     <th scope="col" style="width: 20%">Quantity</th>
@@ -32,7 +32,10 @@
                     <th scope="row">{{ (product.image.search(/^blob/) != -1 ? "Custom " : "") + product.product }} - {{ product.size }}</th>
                     <td>${{ product.price.toFixed(2) }}</td>
                     <td>{{ product.quantity }}</td>
-                    <td>${{ (product.quantity * product.price).toFixed(2) }}</td>
+                    <td>
+                        ${{ (product.quantity * product.price).toFixed(2) }}
+                        <button :id="product.cart_id" @click="removeFromCart">x</button>
+                    </td>
                 </tr> 
             </tbody>
         </table>
@@ -64,6 +67,10 @@
 
     const dispatch = useDispatch()
 
+    const removeFromCart = (e) => {
+        dispatch(cartRemove(e.target.getAttribute("id")))
+    }
+
     const products = useSelector(state => {
         return state.cart.container
     })
@@ -71,7 +78,6 @@
     const subtotal = computed(() => {
         return products.value.reduce((sum, p) => sum + p.price * p.quantity, 0)
     })
-
 
     const tax = computed(() => {
         return subtotal.value * 0.08
