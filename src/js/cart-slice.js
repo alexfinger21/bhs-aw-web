@@ -4,6 +4,12 @@ const initialState = JSON.parse(localStorage.getItem("cart")) ?? {
     container: []
 }
 
+const updateCartIds = (container) => {
+    for (const i in container) {
+        container[i].cart_id = i
+    }
+}
+
 export const cartSlice = createSlice({
     name: "cart",
     initialState: initialState,
@@ -29,10 +35,12 @@ export const cartSlice = createSlice({
             } else {
                 ++state.container[f_idx].quantity
             }
+            updateCartIds(state.container)
             localStorage.setItem("cart", JSON.stringify(state))
         },
         remove: (state, action) => {
             state.container.splice(action.payload)
+            updateCartIds(state.container)
             localStorage.setItem("cart", JSON.stringify(state))
         },
         clear: (state, action) => {

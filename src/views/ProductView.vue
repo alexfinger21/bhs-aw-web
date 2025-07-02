@@ -20,19 +20,17 @@
                 </button>
                 
                 <div class="main-image-container">
-                    <transition name="fade" mode="out-in">
+                    <transition name="fade">
                         <img 
                             :key="currentImageIndex"
-                            :src="product.images[currentImageIndex]" 
+                            :src="product.imgs[currentImageIndex]" 
                             :alt="product.name"
                             class="main-image"
-                            @load="imageLoaded = true"
                         />
                     </transition>
-                    <div v-if="!imageLoaded" class="image-placeholder"></div>
                 </div>
                 
-                <button class="carousel-btn next" @click="nextImage" :disabled="currentImageIndex === product.images.length - 1">
+                <button class="carousel-btn next" @click="nextImage" :disabled="currentImageIndex === product.imgs.length - 1">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <polyline points="9 18 15 12 9 6"></polyline>
                     </svg>
@@ -41,7 +39,7 @@
             
             <div class="thumbnail-container">
                 <div 
-                    v-for="(image, index) in product.images" 
+                    v-for="(image, index) in product.imgs" 
                     :key="index"
                     class="thumbnail"
                     :class="{ active: currentImageIndex === index }"
@@ -104,6 +102,7 @@
                 <button 
                     @click="triggerFileInput"
                     class="upload-button"
+                    v-if="!imageUrl"
                     >
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
@@ -114,6 +113,17 @@
                     </svg>
                     Upload Image
                 </button>  
+                <div class="image-preview-container" v-if="imageUrl">
+                    <div class="preview-wrapper">
+                        <img :src="imageUrl" alt="Preview" class="preview-image" />
+                        <button @click="removeImage" class="remove-btn" aria-label="Remove image">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
             </template>
 
             <div class="product-actions">
@@ -149,7 +159,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                     </svg>
-                    <span>Made with super high quality ancient wood</span>
+                    <span>Support Beachwood High School</span>
                 </div>
             </div>
         </div>
@@ -169,7 +179,7 @@ const route = useRoute()
 const productId = parseInt(route.params.id)
 
 const product = ref({
-    images: [] 
+    imgs: [] 
 })
 
 const loading = ref(true)
@@ -179,8 +189,8 @@ const selectedSize = ref(null)
 const qty1Color = ref("red")
 const qty2Color = ref("")
 const currentImageIndex = ref(0)
-const imageLoaded = ref(false)
 const quantity = ref(1)
+const imageUrl = ref(null)
 const dispatch = useDispatch()
 const cart = useSelector(state => {
     return state.cart.container
@@ -197,9 +207,10 @@ onMounted(async () => {
         const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
         product.value = {
             ...res.data,
-            images: Object.values(res.data.imgs) || [res.data.image] // Fallback to single image if no array
+            imgs: Object.values(res.data.imgs) 
         }
-        selectedSize.value = Object.keys(res.data.sizes)[0] // Set first size as default
+        console.log(product.value.imgs)
+        selectedSize.value = Object.keys(res.data.sizes)[0] 
     } catch (err) {
         console.error("Failed to fetch product:", err)
         error.value = err.message
@@ -209,18 +220,20 @@ onMounted(async () => {
 })
 
 const nextImage = () => {
-    if (currentImageIndex.value < Object.keys(product.value.images).length - 1) {
+    if (currentImageIndex.value < Object.keys(product.value.imgs).length - 1) {
         ++currentImageIndex.value
-        imageLoaded.value = false
     }
-    console.log(product.value.images)
 }
 
 const prevImage = () => {
     if (currentImageIndex.value > 0) {
         --currentImageIndex.value
-        imageLoaded.value = false
     }
+}
+
+const removeImage = () => {
+    imageUrl.value = null
+    product.value.imgs.shift()
 }
 
 const triggerFileInput = () => {
@@ -231,6 +244,11 @@ const handleFileUpload = (event) => {
     const file = event.target.files?.[0]
 
     if (!file) return;
+    const url = URL.createObjectURL(file)
+
+    product.value.imgs.unshift(url)
+    imageUrl.value = url
+
 }
 
 const incrementQuantity = () => {
@@ -266,6 +284,7 @@ const addToCart = () => {
             product: product.value.name,
             size: selectedSize.value,
             price: product.value.starting_p + product.value.sizes[selectedSize.value],
+            image: imageUrl.value ?? product.value.imgs[0]
         })) 
     }
 }
