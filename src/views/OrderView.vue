@@ -57,7 +57,7 @@ onMounted(async () => {
         products.value = null
     }
 })
-console.log(products)
+
 const viewProduct = (id) => {
   router.push(`/details/${id}`)
 }

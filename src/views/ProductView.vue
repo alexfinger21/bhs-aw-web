@@ -209,7 +209,6 @@ onMounted(async () => {
             ...res.data,
             imgs: Object.values(res.data.imgs) 
         }
-        console.log(product.value.imgs)
         selectedSize.value = Object.keys(res.data.sizes)[0] 
     } catch (err) {
         console.error("Failed to fetch product:", err)
