@@ -6,7 +6,7 @@
 
     <!-- Error state -->
     <div v-else-if="error" class="error-message">
-        Failed to load product. Please try again later.
+        Failed to load product. Check your internet connection or report a bug
     </div>
 
     <!-- Loaded state -->
@@ -293,7 +293,8 @@ const addToCart = async () => {
     for (let i = 0; i<quantity.value; ++i) {
         let fallback = null
         if (imageUrl.value) {
-            fallback = await reader.readAsDataURL(imageUrl.value)
+            const blob = await axios.get(imageUrl, {responseType: "blob"})
+            fallback = await reader.readAsDataURL(blob.data)
         }
 
         dispatch(cartAdd({
