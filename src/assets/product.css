@@ -377,10 +377,13 @@ h1 {
 }
 
 .error-message {
-    text-align: center;
+    margin: 0 auto;
+    margin-top: 2rem;
+    display: block;
     padding: 2rem;
-    color: var(--primary-light);
-    font-size: 1.2rem;
+    background-color: var(--primary-lighter);
+    font-size: 1.1rem;
+    width: 30%;
 }
 
 /* Placeholder styles */
