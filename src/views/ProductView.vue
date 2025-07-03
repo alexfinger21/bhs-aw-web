@@ -275,15 +275,33 @@ const decrementQuantity = () => {
     }
 }
 
-const addToCart = () => {
+const asyncRead = async (reader) => {
+    return new Promise((res, rej) => {
+        const evt = reader.addEventListener("load", () => {
+            reader.removeEventListener(evt)
+            return res(reader.result)
+        })
+        
+        reader.readAsDataURL(reader)
+    }) 
+}
+
+const addToCart = async () => {
     if (!productLoaded.value) return
 
+    const reader = new FileReader()
     for (let i = 0; i<quantity.value; ++i) {
+        let fallback = null
+        if (imageUrl.value) {
+            fallback = await reader.readAsDataURL(imageUrl.value)
+        }
+
         dispatch(cartAdd({
             product: product.value.name,
             size: selectedSize.value,
             price: product.value.starting_p + product.value.sizes[selectedSize.value],
-            image: imageUrl.value ?? product.value.imgs[0]
+            image: imageUrl.value ?? product.value.imgs[0],
+            imageFallback: fallback 
         })) 
     }
 }
