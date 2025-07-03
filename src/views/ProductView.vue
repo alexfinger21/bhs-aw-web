@@ -11,6 +11,13 @@
 
     <!-- Loaded state -->
     <div v-else class="product-detail">
+        <div class="mobile header">
+            <h1>{{ product?.name || 'Loading...' }}</h1>
+            <div class="product-meta">
+                <span class="product-sku">SKU: {{ product?.id ?? 'N/A' }}</span>
+                <span class="product-rating">★★★★★ (reviews coming soon)</span>
+            </div>
+        </div>
         <div class="product-gallery">
             <div class="image-carousel">
                 <button class="carousel-btn prev" @click="prevImage" :disabled="currentImageIndex === 0">
@@ -51,7 +58,7 @@
         </div>
 
         <div class="product-info">
-            <div class="product-header">
+            <div class="desktop header">
                 <h1>{{ product?.name || 'Loading...' }}</h1>
                 <div class="product-meta">
                     <span class="product-sku">SKU: {{ product?.id ?? 'N/A' }}</span>
