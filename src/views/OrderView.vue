@@ -6,7 +6,7 @@
             <p>This is where you can order our handmade wooden cutting boards, coasters, etc bla bla bla baboom web words a loit more words and things</p>
         </div>
     </Section>
-    <Divider/>
+    <Divider :margin="3"/>
     
     <div v-if="products" class="product-grid">
       <div 
@@ -15,8 +15,8 @@
         class="product-card"
         @click="viewProduct(product.id)"
       >
-        <div class="product-image"></div>
-        <div class="product-details">
+        <img class="product-image" :src="product.imgs[0]"/>
+        <div class="product-details-o">
           <h3 class="product-title">{{ product.name }}</h3>
           <p class="product-price">From ${{ product.starting_p + Object.values(product.sizes).slice().sort((a, b) => a - b)[0]}}</p>
           <button class="btn" @click.stop="viewProduct(product.id)">View Options</button>

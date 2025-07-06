@@ -1,10 +1,19 @@
 <template>
-    <!-- Loading state -->
+    <transition name="slide-fade">
+        <div v-if="showSuccess" class="success-notification">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            <span>Added to cart successfully!</span>
+        </div>
+    </transition>
+
+    <!-- Error state -->
     <div v-if="loading" class="loading-container">
         <div class="loading-spinner"></div>
     </div>
 
-    <!-- Error state -->
     <div v-else-if="error" class="error-message">
         Failed to load product. Check your internet connection or report a bug
     </div>
@@ -67,7 +76,6 @@
             </div>
             
             <template v-if="product?.sizes">
-                <Divider/>
                 <p class="price">${{ selectedSize ? (product.starting_p + product.sizes[selectedSize]).toFixed(2) : '--' }}</p>
                 <p class="product-description">{{ product.description }}</p>
 
@@ -104,31 +112,31 @@
                 <div class="options">
                     <div class="option-group">
                         <label>Custom design:</label>
-                    </div>
-                </div>
-                <button 
-                    @click="triggerFileInput"
-                    class="upload-button"
-                    v-if="!imageUrl"
-                    >
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
-                        <line x1="16" y1="5" x2="22" y2="5"></line>
-                        <line x1="19" y1="2" x2="19" y2="8"></line>
-                        <circle cx="9" cy="9" r="2"></circle>
-                        <path d="M21 15c-3.87-3.87-9-5-9-5s-1.13 4.13-5 9"></path>
-                    </svg>
-                    Upload Image
-                </button>  
-                <div class="image-preview-container" v-if="imageUrl">
-                    <div class="preview-wrapper">
-                        <img :src="imageUrl" alt="Preview" class="preview-image" />
-                        <button @click="removeImage" class="remove-btn" aria-label="Remove image">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
-                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                        <button 
+                            @click="triggerFileInput"
+                            class="upload-button"
+                            v-if="!imageUrl"
+                            >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7"></path>
+                                <line x1="16" y1="5" x2="22" y2="5"></line>
+                                <line x1="19" y1="2" x2="19" y2="8"></line>
+                                <circle cx="9" cy="9" r="2"></circle>
+                                <path d="M21 15c-3.87-3.87-9-5-9-5s-1.13 4.13-5 9"></path>
                             </svg>
-                        </button>
+                            Upload Image
+                        </button>  
+                        <div class="image-preview-container" v-if="imageUrl">
+                            <div class="preview-wrapper">
+                                <img :src="imageUrl" alt="Preview" class="preview-image" />
+                                <button @click="removeImage" class="remove-btn" aria-label="Remove image">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </template>
@@ -142,8 +150,7 @@
                 <button 
                     class="checkout-btn" 
                     @click="addToCart"
-                    :disabled="!productLoaded"
-                >
+                    >
                     {{ productLoaded ? 'Add to Cart' : 'Loading...' }}
                 </button>
             </div>
@@ -178,7 +185,6 @@ import "@/assets/product.css"
 import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import axios from "axios"
-import Divider from "../components/Divider.vue"
 import { useSelector, useDispatch } from "@reduxjs/vue-redux"
 import { add as cartAdd, remove as cartRemove } from "../js/cart-slice.js"
 
@@ -197,6 +203,7 @@ const qty1Color = ref("red")
 const qty2Color = ref("")
 const currentImageIndex = ref(0)
 const quantity = ref(1)
+const showSuccess = ref(false)
 const imageUrl = ref(null)
 const dispatch = useDispatch()
 const cart = useSelector(state => {
@@ -294,8 +301,6 @@ const asyncRead = async (reader) => {
 }
 
 const addToCart = async () => {
-    if (!productLoaded.value) return
-
     const reader = new FileReader()
     for (let i = 0; i<quantity.value; ++i) {
         let fallback = null
@@ -312,6 +317,12 @@ const addToCart = async () => {
             imageFallback: fallback 
         })) 
     }
+
+    showSuccess.value = true
+    
+    setTimeout(() => {
+        showSuccess.value = false
+    }, 2500)
 }
 </script>
 

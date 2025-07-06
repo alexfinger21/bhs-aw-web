@@ -31,17 +31,19 @@
 }
 
 .product-image {
-  height: 250px;
+  width: 100%;
+  object-fit: contain;
   background-color: var(--background);
   border-bottom: 1px solid var(--primary-lighter);
 }
 
-.product-details {
+.product-details-o {
   padding: 1.5rem;
+  padding-top: 3.5rem;
 }
 
 .product-title {
-  font-family: var(--title-font);
+  font-family: var(--web-font);
   color: var(--text-color);
   font-size: 1.5rem;
   margin-bottom: 0.5rem;
@@ -49,7 +51,6 @@
 
 .product-price {
   color: var(--text-secondary);
-  font-weight: 700;
   font-size: 1.25rem;
   margin-bottom: 1.5rem;
 }

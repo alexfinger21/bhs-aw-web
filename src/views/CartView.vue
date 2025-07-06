@@ -6,7 +6,7 @@
                     <th scope="col" style="width: 10%">Design</th>
                     <th scope="col" style="width: 30%">Product</th>
                     <th scope="col" style="width: 20%">Price</th>
-                    <th scope="col" style="width: 20%">Quantity</th>
+                    <th scope="col" style="width: 20%">Qty.</th>
                     <th scope="col" style="width: 20%">Total</th>
                 </tr>
             </thead>
@@ -15,26 +15,23 @@
                     <td class="product-image-cell">
                         <div class="product-image-wrapper">
                             <img 
-                                v-if="product.image" 
                                 :src="product.image" 
                                 :alt="product.product" 
                                 class="product-thumbnail"
                             />
-                            <div v-else class="image-placeholder">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
-                                    <circle cx="8.5" cy="8.5" r="1.5"></circle>
-                                    <polyline points="21 15 16 10 5 21"></polyline>
-                                </svg>
-                            </div>
                         </div>
                     </td>
                     <th scope="row">{{ (product.image.search(/^blob/) != -1 ? "Custom " : "") + product.product }} - {{ product.size }}</th>
                     <td>${{ product.price.toFixed(2) }}</td>
                     <td>{{ product.quantity }}</td>
-                    <td>
+                    <td class="total-cell">
                         ${{ (product.quantity * product.price).toFixed(2) }}
-                        <button class="cart-remove" :c_id="product.cart_id" @click="removeFromCart">x</button>
+                        <button class="cart-remove" :c_id="product.cart_id" @click="removeFromCart">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="18" y1="6" x2="6" y2="18"></line>
+                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                            </svg>
+                        </button>
                     </td>
                 </tr> 
             </tbody>
@@ -54,6 +51,10 @@
                 <span>Total</span>
                 <span>${{ total.toFixed(2) }}</span>
             </div>
+
+            <label for="input-email">Email: {{txt}}</label>
+            <input name="email" id="input-email" :value="txt" @input="event => txt = event.target.value"></input>
+
             <button class="checkout-button" :disabled="!products.length" :class="{'grey-out': !products.length}" @click="PlaceOrder">{{products.length ? "Email Order" : "Your cart is empty"}} </button>
         </div>
     </div>
@@ -63,9 +64,10 @@
     import "@/assets/cart.css"
     import { useSelector, useDispatch } from "@reduxjs/vue-redux"
     import { add as cartAdd, remove as cartRemove, clear as cartClear } from "../js/cart-slice.js"
-    import { computed } from "vue"
+    import { computed, ref } from "vue"
 
     const dispatch = useDispatch()
+    const txt = ref("@")
 
     const removeFromCart = (e) => {
         dispatch(cartRemove(e.target.getAttribute("c_id")))

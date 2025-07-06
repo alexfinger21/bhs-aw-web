@@ -335,7 +335,7 @@ h1 {
     color: var(--text-color);
     display: inline-block;
     margin-top: 2rem;
-    margin-left: 2rem;
+    margin-left: 1rem;
     padding-left: 0.5rem;
     padding-right: 0.5rem;
     font-size: 2rem;

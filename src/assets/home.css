@@ -1,75 +1,167 @@
-/* ================ */
-/* Non-Stretching Grid System */
-/* ================ */
+.home-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Welcome Section */
+.welcome-section {
+  position: relative;
+  background: linear-gradient(rgba(62, 39, 35, 0.8), rgba(62, 39, 35, 0.8)), 
+              v-bind('url1');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.welcome-content {
+    width: 100%;
+    background-position-y: 40%;
+    background-position-x: 40%;
+}
+
+.welcome-section h1 {
+  font-size: 3.5rem;
+  color: var(--text-color);
+  margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
+  background-color: var(--primary-light);
+  display: inline-block;
+}
+
+.txt-block {
+  background-color: var(--primary-light);
+  padding: 1.5rem;
+  border-radius: 4px;
+  margin: 1.5rem 0;
+  color: var(--text-color);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+}
+
+.txt-block p {
+  margin-bottom: 1rem;
+  line-height: 1.6;
+  font-size: 1.1rem;
+}
+
+.txt-block p:last-child {
+  margin-bottom: 0;
+}
+
+.order-btn {
+  display: inline-block;
+  background-color: var(--primary-light);
+  color: var(--text-color);
+  padding: 0.8rem 2rem;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: 500;
+  margin-top: 1rem;
+  transition: all 0.3s ease;
+  border: 2px solid var(--primary-lighter);
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.order-btn:hover {
+  background-color: var(--primary-lighter);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+}
+
+/* Gallery Section */
+.gallery-section {
+  padding: 0 0 3rem;
+}
+
+/* Enhanced Gallery Grid */
 .img-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 2rem;
   justify-items: center;
   padding: 0 1rem;
-  margin: 2rem 0;
+  margin: 2rem auto;
+  max-width: 1200px;
 }
 
 .grid-item {
   position: relative;
   overflow: hidden;
   width: 100%;
-  max-width: 300px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  background: var(--light-color); /* Your existing variable */
-  display: flex; /* New - for perfect centering */
-  justify-content: center;
-  align-items: center;
+  aspect-ratio: 1/1;
+  background: white;
+  border: 1px solid var(--primary-lighter);
 }
 
-/* Critical image rules */
 .grid-item img {
-  width: auto;
-  height: auto;
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   display: block;
   transition: transform 0.3s ease;
 }
 
-/* Taller container (remove if you want natural height) */
-.grid-item--tall {
-  aspect-ratio: 1 / 1.5;
-}
-
 .grid-item:hover {
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+  transform: translateY(-8px);
 }
 
-.grid-item:hover img {
-  transform: scale(1.03); /* Subtler zoom to prevent distortion */
+/* Responsive Adjustments */
+@media (min-width: 992px) {
+  .img-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 
-/* Overlay */
-.grid-item .overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
-  color: white;
-  padding: 1.5rem 1rem 1rem;
-  opacity: 0;
-  transition: opacity 0.3s ease;
+@media (max-width: 991px) {
+  .img-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2.8rem;
+  }
 }
 
-/* Responsive */
 @media (max-width: 768px) {
   .img-grid {
-    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    grid-template-columns: 1fr;
+    max-width: 500px;
+    margin: 2rem auto;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2.4rem;
+  }
+  
+  .txt-block {
+    padding: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .img-grid {
-    grid-template-columns: 1fr;
+  .welcome-section {
+    padding: 1rem;
+  }
+  
+  .welcome-section h1 {
+    font-size: 2rem;
+    padding: 0.5rem;
+  }
+  
+  .txt-block p {
+    font-size: 1rem;
   }
 }
