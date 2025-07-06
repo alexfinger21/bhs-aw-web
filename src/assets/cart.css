@@ -79,6 +79,10 @@
     padding-top: 10px;
 }
 
+.cart-remove {
+    border: 0;
+}
+
 .checkout-button {
     width: 100%;
     padding: 10px;

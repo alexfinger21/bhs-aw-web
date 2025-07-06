@@ -34,7 +34,7 @@
                     <td>{{ product.quantity }}</td>
                     <td>
                         ${{ (product.quantity * product.price).toFixed(2) }}
-                        <button :id="product.cart_id" @click="removeFromCart">x</button>
+                        <button class="cart-remove" :c_id="product.cart_id" @click="removeFromCart">x</button>
                     </td>
                 </tr> 
             </tbody>
@@ -68,7 +68,7 @@
     const dispatch = useDispatch()
 
     const removeFromCart = (e) => {
-        dispatch(cartRemove(e.target.getAttribute("id")))
+        dispatch(cartRemove(e.target.getAttribute("c_id")))
     }
 
     const products = useSelector(state => {
