@@ -5,6 +5,8 @@ const initialState = {
     text: ""
 }
 
+let lastTick = 0
+
 export const notifSlice = createSlice({
     name: "notif",
     initialState: initialState,
@@ -12,9 +14,12 @@ export const notifSlice = createSlice({
         send: (state, action) => {
             state.visible = true
             state.text = action.payload
+            lastTick = Date.now()
         },
         close: (state, action) => {
-            state.visible = false
+            if (Date.now() - lastTick >= 2499) {
+                state.visible = false
+            }
         }
     }
 })
