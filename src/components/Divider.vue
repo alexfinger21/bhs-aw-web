@@ -12,15 +12,13 @@ const props = defineProps({
   },
   margin: {
     type: String,
-    default: "1.5rem auto"
+    default: "1.5"
   }
 })
 
 const dividerStyle = computed(() => ({
-  "background-color": props.color,
-  height: props.orientation === "horizontal" ? props.thickness : "auto",
   width: props.orientation === "vertical" ? props.thickness : "100%",
-  margin: props.margin + "em",
+  height: props.margin + "em",
 }))
 </script>
 

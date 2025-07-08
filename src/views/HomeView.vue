@@ -15,7 +15,9 @@
     
     <!-- About Section -->
     <Heading text="About Us"/>
+
     <Divider/>
+
     <Section :imageUrl="bgImages[1]" position_y="40%" class="about-section">
       <div class="txt-block">
         <p>Our woodworking program at Beachwood High School combines traditional craftsmanship with modern design. Students learn valuable skills while creating beautiful, functional pieces.</p>
