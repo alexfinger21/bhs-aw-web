@@ -386,6 +386,48 @@ h1 {
     }
 }
 
+.success-notification {
+    position: fixed;
+    top: 7vh;
+    right: 20px;
+    background-color: var(--primary-light);
+    color: white;
+    padding: 15px 25px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 2000;
+    animation: pulse 2s infinite;
+}
+
+.success-notification svg {
+    stroke: white;
+}
+
+/* Animation for the notification */
+.slide-fade-enter-active {
+    transition: all 0.3s ease-out;
+}
+
+.slide-fade-leave-active {
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
+}
+
+.slide-fade-enter-from,
+.slide-fade-leave-to {
+    transform: translateX(20px);
+    opacity: 0;
+}
+
+@keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.4); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+}
+
+
 @media (max-width: 767px) {
     .artisan-name {
         font-size: 1.2rem;

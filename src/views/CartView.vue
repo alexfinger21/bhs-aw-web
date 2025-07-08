@@ -37,7 +37,7 @@
             </tbody>
         </table>
 
-         <div class="checkout-panel">
+         <div class="checkout-panel" ref="checkoutPanel">
             <h3>Order Summary</h3>
             <div class="summary-row">
                 <span>Subtotal</span>
@@ -52,10 +52,10 @@
                 <span>${{ total.toFixed(2) }}</span>
             </div>
 
-            <label for="input-email">Email: {{txt}}</label>
-            <input name="email" id="input-email" :value="txt" @input="event => txt = event.target.value"></input>
+            <label v-if="nextStep" id="email-label" for="input-email">Email:</label>
+            <input v-if="nextStep" name="email" type="email" autocomplete="email" id="input-email" :value="txt" @input="event => txt = event.target.value"></input>
 
-            <button class="checkout-button" :disabled="!products.length" :class="{'grey-out': !products.length}" @click="PlaceOrder">{{products.length ? "Email Order" : "Your cart is empty"}} </button>
+            <button class="checkout-button" :disabled="!products.length" :class="{'grey-out': !(products.length && (!nextStep || verifiedEmail))}" @click="PlaceOrder">{{products.length ? (nextStep ? "Place Order" : "Continue") : "Your cart is empty"}} </button>
         </div>
     </div>
 </template>
@@ -64,10 +64,25 @@
     import "@/assets/cart.css"
     import { useSelector, useDispatch } from "@reduxjs/vue-redux"
     import { add as cartAdd, remove as cartRemove, clear as cartClear } from "../js/cart-slice.js"
-    import { computed, ref } from "vue"
+    import { computed, ref, nextTick, onMounted } from "vue"
+    import { send as notifSend, close as notifClose } from "../js/notif-slice.js"
 
     const dispatch = useDispatch()
-    const txt = ref("@")
+    const txt = ref("")
+    const nextStep = ref(false)
+    const checkoutPanel = ref(null)
+    const emailRegex = /.+@.+\..+/
+
+    onMounted(() => {
+        setHeight()
+    })
+
+    const setHeight = async () => {
+        await nextTick()
+        const height = checkoutPanel.value.scrollHeight
+
+        checkoutPanel.value.style.height = `${height}px`
+    }
 
     const removeFromCart = (e) => {
         dispatch(cartRemove(e.target.getAttribute("c_id")))
@@ -85,12 +100,25 @@
         return subtotal.value * 0.08
     }) 
 
+    const verifiedEmail = computed(() => {
+        return emailRegex.test(txt.value)
+    })
+
     const total = computed(() => {
         return subtotal.value + tax.value
     })
 
     const PlaceOrder = () => {
-        if (products.value.length) {
+        if (!products.value.length) return
+        if (!nextStep.value) {
+            nextStep.value = true
+            setHeight()
+        } else {
+            dispatch(notifSend("Order placed succesfully!"))            
+            setTimeout(()=> {
+                dispatch(notifClose())            
+            }, 2500)
+
             dispatch(cartClear())
         }
     }

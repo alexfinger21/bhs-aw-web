@@ -11,8 +11,8 @@ const props = defineProps({
     default: "var(--accent-color)" 
   },
   margin: {
-    type: String,
-    default: "1.5"
+    type: Number,
+    default: 1.5
   }
 })
 

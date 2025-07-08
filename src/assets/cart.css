@@ -55,6 +55,8 @@
     padding: 20px;
     color: rgb(100, 100, 100);
     width: 100%;
+    transition: height 0.3s ease-in-out;
+    overflow: hidden;
 }
 
 .checkout-panel h3 {
@@ -130,6 +132,39 @@
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
+#email-label {
+  display: block;
+  margin: 1.5rem 0 0.5rem 0;
+  font-family: var(--web-font);
+  color: var(--primary-color);
+  font-size: 1rem;
+}
+
+#input-email {
+  width: 100%;
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--primary-lighter);
+  border-radius: 4px;
+  font-family: var(--web-font);
+  font-size: 1rem;
+  color: var(--primary-color);
+  background-color: white;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+  margin-bottom: 1.5rem;
+}
+
+#input-email:focus {
+  outline: none;
+  border-color: var(--primary-light);
+  box-shadow: 0 0 0 2px rgba(141, 110, 99, 0.3);
+}
+
+#input-email::placeholder {
+  color: var(--primary-lighter);
+  opacity: 0.7;
+}
+
 /* Desktop layout (side by side) */
 @media (min-width: 992px) {
     .cart-container {
@@ -174,5 +209,15 @@
 
     .total-cell {
         white-space: nowrap;
+    }
+
+    #input-email {
+        padding: 0.7rem 0.9rem;
+        font-size: 0.95rem;
+    }
+
+    #email-label {
+        font-size: 0.95rem;
+        margin: 1rem 0 0.4rem 0;
     }
 }

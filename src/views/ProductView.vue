@@ -1,14 +1,4 @@
 <template>
-    <transition name="slide-fade">
-        <div v-if="showSuccess" class="success-notification">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-                <polyline points="22 4 12 14.01 9 11.01"></polyline>
-            </svg>
-            <span>Added to cart successfully!</span>
-        </div>
-    </transition>
-
     <!-- Error state -->
     <div v-if="loading" class="loading-container">
         <div class="loading-spinner"></div>
@@ -187,6 +177,7 @@ import { useRoute } from "vue-router"
 import axios from "axios"
 import { useSelector, useDispatch } from "@reduxjs/vue-redux"
 import { add as cartAdd, remove as cartRemove } from "../js/cart-slice.js"
+import { send as notifSend, close as notifClose } from "../js/notif-slice.js"
 
 const route = useRoute()
 const productId = parseInt(route.params.id)
@@ -203,7 +194,6 @@ const qty1Color = ref("red")
 const qty2Color = ref("")
 const currentImageIndex = ref(0)
 const quantity = ref(1)
-const showSuccess = ref(false)
 const imageUrl = ref(null)
 const dispatch = useDispatch()
 const cart = useSelector(state => {
@@ -289,14 +279,14 @@ const decrementQuantity = () => {
     }
 }
 
-const asyncRead = async (reader) => {
+const asyncRead = async (reader, url_blob) => {
     return new Promise((res, rej) => {
         const evt = reader.addEventListener("load", () => {
-            reader.removeEventListener(evt)
+            reader.removeEventListener("load", evt)
             return res(reader.result)
         })
         
-        reader.readAsDataURL(reader)
+        reader.readAsDataURL(url_blob)
     }) 
 }
 
@@ -305,24 +295,23 @@ const addToCart = async () => {
     for (let i = 0; i<quantity.value; ++i) {
         let fallback = null
         if (imageUrl.value) {
-            const blob = await axios.get(imageUrl, {responseType: "blob"})
-            fallback = await reader.readAsDataURL(blob.data)
+            const blob = await axios.get(imageUrl.value, {responseType: "blob"})
+            fallback = await asyncRead(reader, blob.data)
+            imageUrl.value = fallback
         }
 
         dispatch(cartAdd({
             product: product.value.name,
             size: selectedSize.value,
             price: product.value.starting_p + product.value.sizes[selectedSize.value],
-            image: imageUrl.value ?? product.value.imgs[0],
-            imageFallback: fallback 
+            image: fallback ?? product.value.imgs[0],
         })) 
     }
 
-    showSuccess.value = true
-    
+    dispatch(notifSend("Added to cart successfully!"))
+
     setTimeout(() => {
-        showSuccess.value = false
+        dispatch(notifClose())
     }, 2500)
 }
 </script>
-
