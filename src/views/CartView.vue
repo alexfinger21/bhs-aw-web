@@ -108,12 +108,15 @@
         return subtotal.value + tax.value
     })
 
-    const PlaceOrder = () => {
+    const PlaceOrder = async () => {
         if (!products.value.length) return
         if (!nextStep.value) {
             nextStep.value = true
             setHeight()
         } else {
+            const res = await axios.post("http://localhost:3001/api/order", { 
+               "cart": cart.value 
+            })
             dispatch(notifSend("Order placed succesfully!"))            
             setTimeout(()=> {
                 dispatch(notifClose())            
