@@ -20,8 +20,4 @@ router.get("/:id", async (req, res) => {
     return res.send(item)
 })
 
-router.post("/:id/buy", (req, res) => {
-    //query db, send email for now prob
-})
-
 module.exports = router
