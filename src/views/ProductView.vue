@@ -196,6 +196,8 @@ const currentImageIndex = ref(0)
 const quantity = ref(1)
 const imageUrl = ref(null)
 const dispatch = useDispatch()
+const MAX_IMAGE_SIZE = 1024*1024*1.5
+
 const cart = useSelector(state => {
     return state.cart.container
 })
@@ -246,7 +248,11 @@ const triggerFileInput = () => {
 const handleFileUpload = (event) => {
     const file = event.target.files?.[0]
 
-    if (!file) return;
+    if (file.size > MAX_IMAGE_SIZE) {
+        dispatch(notifSend({success: false, message: "Image is too large (>1.5mb)"}))
+    }
+
+    if (!file || file.size > MAX_IMAGE_SIZE || file.type.substring(0, 6) != "image/") return;
     const url = URL.createObjectURL(file)
 
     product.value.imgs.unshift(url)
@@ -308,7 +314,7 @@ const addToCart = async () => {
         })) 
     }
 
-    dispatch(notifSend("Added to cart successfully!"))
+    dispatch(notifSend({success: true, message: "Added to cart successfully!"}))
 
     setTimeout(() => {
         dispatch(notifClose())

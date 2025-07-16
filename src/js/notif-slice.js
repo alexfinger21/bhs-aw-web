@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit"
 
 const initialState = {
     visible: false,
-    text: ""
+    success: true,
+    message: ""
 }
 
 let lastTick = 0
@@ -13,7 +14,8 @@ export const notifSlice = createSlice({
     reducers: {
         send: (state, action) => {
             state.visible = true
-            state.text = action.payload
+            state.message = action.payload.message
+            state.success = action.payload.success
             lastTick = Date.now()
         },
         close: (state, action) => {

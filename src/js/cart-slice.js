@@ -36,12 +36,20 @@ export const cartSlice = createSlice({
                 ++state.container[f_idx].quantity
             }
             updateCartIds(state.container)
-            localStorage.setItem("cart", JSON.stringify(state))
+            try {
+                localStorage.setItem("cart", JSON.stringify(state))
+            } catch { 
+                console.log("local storage exceeded")
+            }
         },
         remove: (state, action) => {
             state.container.splice(action.payload)
             updateCartIds(state.container)
-            localStorage.setItem("cart", JSON.stringify(state))
+            try {
+                localStorage.setItem("cart", JSON.stringify(state))
+            } catch {
+                console.log("local storage exceeded")
+            }
         },
         clear: (state, action) => {
             state.container = []

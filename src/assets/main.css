@@ -386,24 +386,35 @@ h1 {
     }
 }
 
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 15px 25px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 2000;
+  transition: all 0.3s ease;
+}
+
+/* Success notification */
 .success-notification {
-    position: fixed;
-    top: 7vh;
-    right: 20px;
-    background-color: var(--primary-light);
-    color: white;
-    padding: 15px 25px;
-    border-radius: 4px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-    z-index: 2000;
-    animation: pulse 2s infinite;
+  background-color: #4CAF50;
+  color: white;
+}
+
+/* Error notification */
+.error-notification {
+  background-color: #f44336;
+  color: white;
 }
 
 .success-notification svg {
     stroke: white;
+    flex-shrink: 0;
 }
 
 /* Animation for the notification */

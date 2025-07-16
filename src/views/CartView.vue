@@ -11,7 +11,7 @@
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="product in products" :key="product.cart_id">
+                <tr v-for="product in cart" :key="product.cart_id">
                     <td class="product-image-cell">
                         <div class="product-image-wrapper">
                             <img 
@@ -55,7 +55,7 @@
             <label v-if="nextStep" id="email-label" for="input-email">Email:</label>
             <input v-if="nextStep" name="email" type="email" autocomplete="email" id="input-email" :value="txt" @input="event => txt = event.target.value"></input>
 
-            <button class="checkout-button" :disabled="!products.length" :class="{'grey-out': !(products.length && (!nextStep || verifiedEmail))}" @click="PlaceOrder">{{products.length ? (nextStep ? "Place Order" : "Continue") : "Your cart is empty"}} </button>
+            <button class="checkout-button" :disabled="!cart.length" :class="{'grey-out': !(cart.length && (!nextStep || verifiedEmail))}" @click="PlaceOrder">{{cart.length ? (nextStep ? "Place Order" : "Continue") : "Your cart is empty"}} </button>
         </div>
     </div>
 </template>
@@ -66,34 +66,41 @@
     import { add as cartAdd, remove as cartRemove, clear as cartClear } from "../js/cart-slice.js"
     import { computed, ref, nextTick, onMounted } from "vue"
     import { send as notifSend, close as notifClose } from "../js/notif-slice.js"
+    import axios from "axios"
 
     const dispatch = useDispatch()
     const txt = ref("")
     const nextStep = ref(false)
     const checkoutPanel = ref(null)
     const emailRegex = /.+@.+\..+/
+    let oldHeight = null
 
     onMounted(() => {
         setHeight()
     })
 
     const setHeight = async () => {
-        await nextTick()
-        const height = checkoutPanel.value.scrollHeight
+        if (!oldHeight) {
+            oldHeight = checkoutPanel.value.style.height 
+            await nextTick()
+            const height = checkoutPanel.value.scrollHeight
 
-        checkoutPanel.value.style.height = `${height}px`
+            checkoutPanel.value.style.height = `${height}px`
+        } else {
+            checkoutPanel.value.style.height = oldHeight
+        }
     }
 
     const removeFromCart = (e) => {
         dispatch(cartRemove(e.target.getAttribute("c_id")))
     }
 
-    const products = useSelector(state => {
+    const cart = useSelector(state => {
         return state.cart.container
     })
 
     const subtotal = computed(() => {
-        return products.value.reduce((sum, p) => sum + p.price * p.quantity, 0)
+        return cart.value.reduce((sum, p) => sum + p.price * p.quantity, 0)
     })
 
     const tax = computed(() => {
@@ -109,20 +116,32 @@
     })
 
     const PlaceOrder = async () => {
-        if (!products.value.length) return
+        if (!cart.value.length) return
         if (!nextStep.value) {
             nextStep.value = true
             setHeight()
         } else {
-            const res = await axios.post("http://localhost:3001/api/order", { 
-               "cart": cart.value 
-            })
-            dispatch(notifSend("Order placed succesfully!"))            
-            setTimeout(()=> {
-                dispatch(notifClose())            
-            }, 2500)
+            let res;
 
-            dispatch(cartClear())
+            try {
+                res = await axios.post("http://localhost:3001/api/order", { 
+                   "cart": cart.value,
+                   "email": txt.value 
+                })
+            } catch {}
+
+            if (res?.data?.success) {
+                dispatch(notifSend({success: true, message: "Order placed succesfully!"}))
+                setTimeout(()=> {
+                    dispatch(notifClose())            
+                }, 2500)
+                nextStep.value = false
+
+                setHeight()
+                dispatch(cartClear())
+            } else {
+                dispatch(notifSend({success: false, message: "Unable to place order, is your image too large (>5mb) ?"}))
+            }
         }
     }
 
