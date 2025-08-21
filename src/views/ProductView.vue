@@ -239,6 +239,8 @@ const prevImage = () => {
 const removeImage = () => {
     imageUrl.value = null
     product.value.imgs.shift()
+    --currentImageIndex.value
+    currentImageIndex.value = Math.max(0, Math.min(product.value.imgs.length - 1, currentImageIndex.value))
 }
 
 const triggerFileInput = () => {
