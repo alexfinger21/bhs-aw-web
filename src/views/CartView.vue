@@ -121,6 +121,8 @@
             nextStep.value = true
             setHeight()
         } else {
+            console.log(verifiedEmail.value)
+            if (!verifiedEmail.value) return
             let res;
 
             try {
