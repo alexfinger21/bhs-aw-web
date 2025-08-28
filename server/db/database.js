@@ -1,5 +1,6 @@
 const { MongoClient } = require("mongodb")
 
+// to do : add online mongodb client
 const adminUri = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}/admin?authSource=admin`
 let client = null
 
