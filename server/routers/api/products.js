@@ -4,9 +4,9 @@ const router = express.Router()
 
 router.get("/", async (req, res) => {
     const client = await getDB()
+    console.log("HERERERR")
     const prods = await client.collection("products").find({}, {projection: {_id: 0}}).toArray()
-
-    //console.log("PRODS", prods)
+    console.log("PRODS", prods)
     
     res.send(prods)
 })

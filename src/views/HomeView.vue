@@ -57,8 +57,8 @@
 
     const galleryImages = [
         new URL("../assets/imgs/boards-1.jpg", import.meta.url).href,
-        new URL("../assets/imgs/boards-2.jpg", import.meta.url).href,
-        new URL("../assets/imgs/coasters-1.jpg", import.meta.url).href,
+        new URL("../assets/imgs/namaste-1.jpg", import.meta.url).href,
+        new URL("../assets/imgs/shoe-jack-1.jpg", import.meta.url).href,
         new URL("../assets/imgs/coasters-2.jpg", import.meta.url).href,
         new URL("../assets/imgs/cutting-board.jpg", import.meta.url).href,
         new URL("../assets/imgs/serving-tray.jpg", import.meta.url).href
