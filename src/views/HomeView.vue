@@ -3,9 +3,9 @@
         <!-- Welcome Section -->
         <div class="welcome-section">
             <div class="welcome-content" :style="{ backgroundImage: `url(${bgImages[0]})`}">
-                <h1>Welcome 👋</h1>
+                <h1>Welcome to BHS Artisanal Woodworking!</h1>
                 <div class="txt-block">
-                    <p>Discover handcrafted wooden treasures made with passion at Beachwood High School. Each piece combines traditional craftsmanship with sustainable practices.</p>
+                    <p>Discover handmade and customizable cutting boards, coasters, engraved mugs, coffee cups, and rustic signs made with sustainable practices.</p>
                 </div>
                 <router-link to="/order" class="order-btn">Shop Now</router-link>
             </div>
@@ -20,8 +20,9 @@
 
         <Section :imageUrl="bgImages[1]" position_y="40%" class="about-section">
             <div class="txt-block">
-                <p>Our woodworking program at Beachwood High School combines traditional craftsmanship with modern design. Students learn valuable skills while creating beautiful, functional pieces.</p>
-                <p>We take pride in our commitment to sustainability, using locally sourced wood and environmentally friendly finishes. Every piece tells a story of skill, patience, and dedication to quality.</p>
+                <p>We’re two seniors from Beachwood High School who turned a classroom project into a growing business. Founded in our Design & Engineering class last year, BHS Artisanal Woodworking started with a simple idea: take scraps of wood from the school woodshop and transform them into something beautiful and useful.</p>
+                <p>Our first products, handcrafted cutting boards, showed us that even leftover pieces could become something lasting with creativity and care. What began as a small project quickly grew into something bigger: a way to inspire and involve other young people. Along the way, we’ve invited students to join us in learning about the engineering design process, developing woodworking skills, and even coding this very website. </p>
+                <p>For us, woodworking is about creating opportunities, building community, and showing what’s possible when young entrepreneurs take a chance on their ideas.</p>
             </div>
         </Section>
 

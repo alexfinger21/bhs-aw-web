@@ -3,7 +3,7 @@
     <Section :imageUrl="url1">
         <h1>Our Handcrafted Collection 🪵</h1>
         <div class="txt-block">
-            <p>This is where you can order our handmade wooden cutting boards, coasters, etc bla bla bla baboom web words a loit more words and things</p>
+            <p>From cutting boards to rustic signs — pick your favorite or create something one-of-a-kind.</p>
         </div>
     </Section>
     <Divider :margin="3"/>
