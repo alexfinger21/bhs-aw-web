@@ -55,7 +55,7 @@
             <label v-if="nextStep" id="email-label" for="input-email">Email:</label>
             <input v-if="nextStep" name="email" type="email" autocomplete="email" id="input-email" :value="txt" @input="event => txt = event.target.value"></input>
 
-            <button class="checkout-button" :disabled="!cart.length" :class="{'grey-out': !(cart.length && (!nextStep || verifiedEmail))}" @click="PlaceOrder">{{cart.length ? (nextStep ? "Place Order" : "Continue") : "Your cart is empty"}} </button>
+            <button class="checkout-button" :disabled="!cart.length" :class="{'grey-out': !(cart.length && (!nextStep || verifiedEmail))}" @click="PlaceOrder">{{cart.length ? (nextStep ? "Save Likes" : "Continue") : "Your Likes are empty"}} </button>
         </div>
     </div>
 </template>

@@ -141,7 +141,7 @@
                     class="checkout-btn" 
                     @click="addToCart"
                     >
-                    {{ productLoaded ? 'Add to Cart' : 'Loading...' }}
+                    {{ productLoaded ? 'Add to Likes' : 'Loading...' }}
                 </button>
             </div>
             
