@@ -11,7 +11,7 @@ const routes = [
   { path: "/", component: HomeView },
   { path: "/order", component: OrderView },
   { path: "/details/:id", component: ProductView },
-  { path: "/cart", component: CartView },
+  { path: "/likes", component: CartView },
   { path: "/admin", component: AdminView },
   { path: "/admin/orders", component: AdminOrderView },
 ]

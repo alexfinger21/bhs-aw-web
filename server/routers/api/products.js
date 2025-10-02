@@ -4,9 +4,7 @@ const router = express.Router()
 
 router.get("/", async (req, res) => {
     const client = await getDB()
-    console.log("HERERERR")
     const prods = await client.collection("products").find({}, {projection: {_id: 0}}).toArray()
-    console.log("PRODS", prods)
     
     res.send(prods)
 })
@@ -16,6 +14,7 @@ router.get("/:id", async (req, res) => {
 
     const client = await getDB()
     const item = await client.collection("products").findOne({id: Number(p_id)}, {projection: {_id: 0}})
+    console.log(item)
 
     return res.send(item)
 })

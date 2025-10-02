@@ -38,7 +38,7 @@
         </table>
 
          <div class="checkout-panel" ref="checkoutPanel">
-            <h3>Likes OrderSummary</h3>
+            <h3>Likes Summary</h3>
             <div class="summary-row">
                 <span>Subtotal</span>
                 <span>${{ subtotal.toFixed(2) }}</span>

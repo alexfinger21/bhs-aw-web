@@ -25,7 +25,7 @@
                         <p class="artisan-name">BHS Artisanal Works</p>
                     </router-link>
                     <div class="navbar-right">
-                        <router-link to="/cart" class="cart-icon">
+                        <router-link to="/likes" class="cart-icon">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <circle cx="9" cy="21" r="1"></circle>
                                 <circle cx="20" cy="21" r="1"></circle>
@@ -64,7 +64,7 @@
                         <h3 class="title">Quick Links</h3>
                         <router-link to="/">Home</router-link>
                         <router-link to="/order">Order</router-link>
-                        <router-link to="/cart">Cart</router-link>
+                        <router-link to="/likes">Likes</router-link>
                     </div>
                     <div class="footer-section">
                         <h3 class="title">Contact</h3>

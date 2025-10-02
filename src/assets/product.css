@@ -232,6 +232,15 @@ h1 {
     font-weight: 500;
 }
 
+.heart-icon {
+    flex-shrink: 0;
+    position: relative;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+    transition: transform 0.1s ease;
+}
+
 .checkout-btn {
     background-color: var(--primary-color);
     color: white;
@@ -244,10 +253,52 @@ h1 {
     flex-grow: 1;
     font-size: 1.1rem;
     border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
 }
 
 .checkout-btn:hover {
     background-color: var(--primary-light);
+}
+
+.heart-container {
+    position: relative;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+}
+
+.heart-outline,
+.heart-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.heart-outline {
+    z-index: 2;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.heart-fill {
+    z-index: 1;
+    fill: currentColor;
+    clip-path: inset(100% 0 0 0);
+    transition: clip-path 0.5s ease;
+}
+
+.checkout-btn:hover .heart-fill {
+    clip-path: inset(0 0 0 0);
+}
+
+.checkout-btn:hover .heart-container {
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
 }
 
 .success-notification {

@@ -297,15 +297,27 @@ body {
 }
 
 .txt-block {
-    margin: 0.5rem;
-    margin-left: 2rem;
-    padding-left: 0.5rem;
-    font-size: 1em;
-    font-weight: 500;
-    opacity: 1;
-    width: 40%;
-    color: var(--text-color);
     background-color: var(--primary-light);
+    padding: 1.5rem;
+    border-radius: 4px;
+    margin: 1.5rem 0;
+    color: var(--text-color);
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.txt-block p {
+    margin-bottom: 1rem;
+    line-height: 1.6;
+    font-size: 1.1rem;
+}
+
+.txt-block p:last-child {
+    margin-bottom: 0;
 }
 
 h1 {
@@ -317,6 +329,8 @@ h1 {
     padding-right: 0.5rem;
     font-size: 2.5rem;
     background-color: var(--primary-light);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+    border-radius: 0 4px 4px 0;
     width: auto;
 }
 
@@ -340,6 +354,8 @@ h1 {
     padding-right: 0.5rem;
     font-size: 2rem;
     background-color: var(--primary-light);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     width: auto;
 }
 
@@ -387,29 +403,29 @@ h1 {
 }
 
 .notification {
-  position: fixed;
-  top: 20px;
-  right: 20px;
-  padding: 15px 25px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  z-index: 2000;
-  transition: all 0.3s ease;
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 15px 25px;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    z-index: 2000;
+    transition: all 0.3s ease;
 }
 
 /* Success notification */
 .success-notification {
-  background-color: #4CAF50;
-  color: white;
+    background-color: #4CAF50;
+    color: white;
 }
 
 /* Error notification */
 .error-notification {
-  background-color: #f44336;
-  color: white;
+    background-color: #f44336;
+    color: white;
 }
 
 .success-notification svg {
