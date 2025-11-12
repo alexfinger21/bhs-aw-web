@@ -37,8 +37,6 @@ import Divider from "@/components/Divider.vue"
 import axios from "axios"
 import {ref, onMounted} from "vue"
 
-const router = useRouter()
-
 defineProps({
     url1: {
         type: String,
@@ -46,11 +44,33 @@ defineProps({
     }
 })
 
+const Prod = class Product {
+    constructor(name, imgs = [], id, sizes = {}, starting_p) {
+        this.name = name
+        this.imgs = imgs
+        this.id = id
+        this.sizes = sizes
+        this.sizes.sort((a, b) => {
+            return b - a
+        })
+        this.starting_p = starting_p
+    }
+
+    getStartingPrice() {
+        return starting_p + Object.values(this.sizes)[0]
+    }
+
+
+}
+
 const products = ref({}) 
 onMounted(async () => {
     try {
         const res = await axios.get("http://localhost:3001/api/products")
         res.data = res.data.filter(e => e.name != "test")
+        const obj_data = [
+
+        ]
         products.value = res.data 
     } catch (err) {
         console.warn("NET ERR", err)
