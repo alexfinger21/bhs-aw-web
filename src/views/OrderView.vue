@@ -13,12 +13,12 @@
         v-for="product in products" 
         :key="product.id" 
         class="product-card"
-        @click="viewProduct(product.id)"
+        @click="viewjjjjjProduct(product.id)"
       >
-        <img class="product-image" :src="product.imgs[0]"/>
+        <img class="product-image" :src="product.imgThumbnail"/>
         <div class="product-details-o">
           <h3 class="product-title">{{ product.name }}</h3>
-          <p class="product-price">From ${{ product.starting_p + Object.values(product.sizes).slice().sort((a, b) => a - b)[0]}}</p>
+          <p class="product-price">From ${{ product.startingPrice}}</p>
           <button class="btn" @click.stop="viewProduct(product.id)">View Options</button>
         </div>
       </div>
@@ -37,6 +37,8 @@ import Divider from "@/components/Divider.vue"
 import axios from "axios"
 import {ref, onMounted} from "vue"
 
+const router = useRouter()
+
 defineProps({
     url1: {
         type: String,
@@ -44,34 +46,39 @@ defineProps({
     }
 })
 
-const Prod = class Product {
-    constructor(name, imgs = [], id, sizes = {}, starting_p) {
+class Product {
+    #starting_p
+
+    constructor(name, imgs = [], id, sizes = {}, starting_p, thumbnail = 0) {
         this.name = name
         this.imgs = imgs
+        this.thumbnail = thumbnail 
         this.id = id
         this.sizes = sizes
-        this.sizes.sort((a, b) => {
-            return b - a
-        })
-        this.starting_p = starting_p
+        this.#starting_p = starting_p
+        this.actual_starting_p = starting_p + Object.values(this.sizes).sort()[0]
     }
 
-    getStartingPrice() {
-        return starting_p + Object.values(this.sizes)[0]
+    get startingPrice() {
+        return this.actual_starting_p
     }
 
-
+    get imgThumbnail() {
+        return this.imgs[this.thumbnail]
+    }
 }
+
+const CuttingBoards = new Product("Cutting Board", [
+    "https://avatars.githubusercontent.com/u/61606770?v=4", 
+    "https://i.ytimg.com/vi/8p-hs-5tKmM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBIJF1_RtUZ4srWnx40bv2b-fQKsg"],
+    0, {"small": 5, "medium": 10, "large": 15}, 15, 0
+)
+
 
 const products = ref({}) 
 onMounted(async () => {
     try {
-        const res = await axios.get("http://localhost:3001/api/products")
-        res.data = res.data.filter(e => e.name != "test")
-        const obj_data = [
-
-        ]
-        products.value = res.data 
+        products.value = [CuttingBoards]
     } catch (err) {
         console.warn("NET ERR", err)
         products.value = null
