@@ -66,7 +66,7 @@
             </div>
             
             <template v-if="product?.sizes">
-                <p class="price">${{ selectedSize ? (product.starting_p + product.sizes[selectedSize]).toFixed(2) : '--' }}</p>
+                <p class="price">${{ selectedSize ? (product.getPrice(selectedSize)).toFixed(2) : '--' }}</p>
                 <p class="product-description">{{ product.description }}</p>
 
                 <div class="options">
@@ -219,12 +219,9 @@ const productLoaded = computed(() => {
 
 onMounted(async () => {
     try {
-        const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
-        product.value = {
-            ...res.data,
-            imgs: Object.values(res.data.imgs) 
-        }
-        selectedSize.value = Object.keys(res.data.sizes)[0] 
+        //const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
+        product.value = window.products.find(e => e.id == productId) 
+        selectedSize.value = Object.keys(product.value.sizes)[0] 
     } catch (err) {
         console.error("Failed to fetch product:", err)
         error.value = err.message

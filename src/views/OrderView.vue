@@ -13,7 +13,7 @@
         v-for="product in products" 
         :key="product.id" 
         class="product-card"
-        @click="viewjjjjjProduct(product.id)"
+        @click="viewProduct(product.id)"
       >
         <img class="product-image" :src="product.imgThumbnail"/>
         <div class="product-details-o">
@@ -47,16 +47,17 @@ defineProps({
 })
 
 class Product {
-    #starting_p
+    #starting_p = 0
 
-    constructor(name, imgs = [], id, sizes = {}, starting_p, thumbnail = 0) {
+    constructor(name, imgs = [], id, sizes = {}, starting_p, thumbnail = 0, allow_custom = false) {
         this.name = name
         this.imgs = imgs
         this.thumbnail = thumbnail 
         this.id = id
         this.sizes = sizes
-        this.#starting_p = starting_p
+        this.starting_p = starting_p
         this.actual_starting_p = starting_p + Object.values(this.sizes).sort()[0]
+        this.allow_custom = allow_custom
     }
 
     get startingPrice() {
@@ -66,19 +67,24 @@ class Product {
     get imgThumbnail() {
         return this.imgs[this.thumbnail]
     }
+
+    getPrice(size) {
+        return this.starting_p + this.sizes[size]
+    }
 }
 
 const CuttingBoards = new Product("Cutting Board", [
     "https://avatars.githubusercontent.com/u/61606770?v=4", 
     "https://i.ytimg.com/vi/8p-hs-5tKmM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBIJF1_RtUZ4srWnx40bv2b-fQKsg"],
-    0, {"small": 5, "medium": 10, "large": 15}, 15, 0
+    0, {"small": 5, "medium": 10, "large": 15}, 15, 0, true
 )
 
+window.products = [CuttingBoards]
 
 const products = ref({}) 
 onMounted(async () => {
     try {
-        products.value = [CuttingBoards]
+        products.value = window.products
     } catch (err) {
         console.warn("NET ERR", err)
         products.value = null
