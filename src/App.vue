@@ -120,7 +120,7 @@
         "Cutting Board", 
         boardImgs,
         0, 
-        {"small": 0, "medium": 10, "large": 20}, 
+        {"small": 0, "medium": 10, "large": 15}, 
         40, 
         0, 
         true
@@ -140,7 +140,7 @@
         "Sign", 
         signImgs,
         2, 
-        {"small": 0, "medium": 5, "large": "10"}, 
+        {"small": 0, "medium": 5, "large": 10}, 
         20, 
         0, 
         true
