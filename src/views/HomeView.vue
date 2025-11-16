@@ -7,7 +7,7 @@
                 <div class="txt-block">
                     <p>Discover handmade and customizable cutting boards, coasters, engraved mugs, coffee cups, and rustic signs made with sustainable practices.</p>
                 </div>
-                <router-link to="/order" class="order-btn">Shop Now</router-link>
+                <router-link to="/store" class="order-btn">Shop Now</router-link>
             </div>
         </div>
 
@@ -57,12 +57,12 @@
     ]
 
     const galleryImages = [
+        new URL("../assets/imgs/signs-1.jpg", import.meta.url).href,
         new URL("../assets/imgs/boards-1.jpg", import.meta.url).href,
-        new URL("../assets/imgs/namaste-1.jpg", import.meta.url).href,
         new URL("../assets/imgs/shoe-jack-1.jpg", import.meta.url).href,
+        new URL("../assets/imgs/signs-2.jpg", import.meta.url).href,
+        new URL("../assets/imgs/coasters-1.jpg", import.meta.url).href,
         new URL("../assets/imgs/coasters-2.jpg", import.meta.url).href,
-        new URL("../assets/imgs/cutting-board.jpg", import.meta.url).href,
-        new URL("../assets/imgs/serving-tray.jpg", import.meta.url).href
     ]
 
 </script>

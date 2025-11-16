@@ -2,18 +2,14 @@ import { createWebHashHistory, createRouter } from "vue-router"
 
 import HomeView from "../views/HomeView.vue"
 import ProductView from "../views/ProductView.vue"
-import OrderView from "../views/OrderView.vue"
+import StoreView from "../views/StoreView.vue"
 import CartView from "../views/CartView.vue"
-import AdminView from "../views/admin/RootView.vue"
-import AdminOrderView from "../views/admin/OrderView.vue"
 
 const routes = [
   { path: "/", component: HomeView },
-  { path: "/order", component: OrderView },
+  { path: "/store", component: StoreView },
   { path: "/details/:id", component: ProductView },
-  { path: "/likes", component: CartView },
-  { path: "/admin", component: AdminView },
-  { path: "/admin/orders", component: AdminOrderView },
+  { path: "/likes", component: CartView }
 ]
 
 const router = createRouter({

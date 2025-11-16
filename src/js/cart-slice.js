@@ -43,7 +43,7 @@ export const cartSlice = createSlice({
             }
         },
         remove: (state, action) => {
-            state.container.splice(action.payload)
+            state.container.splice(action.payload, 1)
             updateCartIds(state.container)
             try {
                 localStorage.setItem("cart", JSON.stringify(state))

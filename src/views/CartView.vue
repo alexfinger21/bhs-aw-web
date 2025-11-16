@@ -26,7 +26,7 @@
                     <td>{{ product.quantity }}</td>
                     <td class="total-cell">
                         ${{ (product.quantity * product.price).toFixed(2) }}
-                        <button class="cart-remove" :c_id="product.cart_id" @click="removeFromCart">
+                        <button class="cart-remove" :c_id="product.cart_id" @click="removeFromCart(product.cart_id)">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <line x1="18" y1="6" x2="6" y2="18"></line>
                                 <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -86,8 +86,8 @@
         }
     }
 
-    const removeFromCart = (e) => {
-        dispatch(cartRemove(e.target.getAttribute("c_id")))
+    const removeFromCart = (id) => {
+        dispatch(cartRemove(id))
     }
 
     const cart = useSelector(state => {
@@ -109,37 +109,4 @@
     const total = computed(() => {
         return subtotal.value + tax.value
     })
-
-    const PlaceOrder = async () => {
-        if (!cart.value.length) return
-        if (!nextStep.value) {
-            nextStep.value = true
-            setHeight()
-        } else {
-            console.log(verifiedEmail.value)
-            if (!verifiedEmail.value) return
-            let res;
-
-            try {
-                res = await axios.post("http://localhost:3001/api/order", { 
-                   "cart": cart.value,
-                   "email": txt.value 
-                })
-            } catch {}
-
-            if (res?.data?.success) {
-                dispatch(notifSend({success: true, message: "Order placed succesfully!"}))
-                setTimeout(()=> {
-                    dispatch(notifClose())            
-                }, 2500)
-                nextStep.value = false
-
-                setHeight()
-                dispatch(cartClear())
-            } else {
-                dispatch(notifSend({success: false, message: "Unable to place order, is your image too large (>5mb) ?"}))
-            }
-        }
-    }
-
 </script>

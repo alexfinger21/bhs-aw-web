@@ -39,7 +39,7 @@
                 </div>
                 <div class="navbar-links" :class="{ 'active': menuActive }">
                     <router-link to="/" class="nav-link" @click="navClick">Home</router-link>
-                    <router-link to="/order" class="nav-link" @click="navClick">Order</router-link>
+                    <router-link to="/store" class="nav-link" @click="navClick">Store</router-link>
                 </div>
             </div>
         </nav>
@@ -56,12 +56,12 @@
                 <div class="footer-content">
                     <div class="footer-section">
                         <h3 class="title">BHS Woodworking</h3>
-                        <p>Made with 💗 by BHS Woodworking</p>
+                        <p>Made by Alex R.</p>
                     </div>
                     <div class="footer-section">
                         <h3 class="title">Quick Links</h3>
                         <router-link to="/">Home</router-link>
-                        <router-link to="/order">Order</router-link>
+                        <router-link to="/store">Store</router-link>
                         <router-link to="/likes">Likes</router-link>
                     </div>
                     <div class="footer-section">
@@ -97,11 +97,64 @@
         menuActive.value = false
     }
 
-    const CuttingBoards = new Product("Cutting Board", [
-        "https://avatars.githubusercontent.com/u/61606770?v=4", 
-        "https://i.ytimg.com/vi/8p-hs-5tKmM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBIJF1_RtUZ4srWnx40bv2b-fQKsg"],
-        0, {"small": 5, "medium": 10, "large": 15}, 15, 0, true
+    const boardImgs = [
+        new URL("./assets/imgs/boards-1.jpg", import.meta.url).href,
+        new URL("./assets/imgs/boards-2.jpg", import.meta.url).href
+    ]
+
+    const shoeImgs = [
+        new URL("./assets/imgs/shoe-jack-1.jpg", import.meta.url).href
+    ]
+
+    const coasterImgs = [
+        new URL("./assets/imgs/coasters-1.jpg", import.meta.url).href,
+        new URL("./assets/imgs/coasters-2.jpg", import.meta.url).href
+    ]
+
+    const signImgs = [
+        new URL("./assets/imgs/signs-1.jpg", import.meta.url).href,
+        new URL("./assets/imgs/signs-2.jpg", import.meta.url).href
+    ]
+
+    const CuttingBoards = new Product(
+        "Cutting Board", 
+        boardImgs,
+        0, 
+        {"small": 0, "medium": 10, "large": 20}, 
+        40, 
+        0, 
+        true
     )
 
-    window.products = [CuttingBoards]
+    const ShoeJacks = new Product(
+        "Shoe Jack", 
+        shoeImgs,
+        1, 
+        {"regular": null}, 
+        20, 
+        0, 
+        false
+    )
+
+    const Signs = new Product(
+        "Sign", 
+        signImgs,
+        2, 
+        {"small": 0, "medium": 5, "large": "10"}, 
+        20, 
+        0, 
+        true
+    )
+
+    const Coasters = new Product(
+        "Coasters (Set of 4)", 
+        coasterImgs,
+        3, 
+        {"regular": null}, 
+        15, 
+        0, 
+        true
+    )
+
+    window.products = [CuttingBoards, ShoeJacks, Signs, Coasters]
 </script>

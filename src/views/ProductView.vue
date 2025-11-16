@@ -66,7 +66,7 @@
             </div>
             
             <template v-if="product?.sizes">
-                <p class="price">${{ selectedSize ? (product.getPrice(selectedSize)).toFixed(2) : '--' }}</p>
+                <p class="price">~${{ selectedSize ? (product.getPrice(selectedSize)).toFixed(2) : '--' }}</p>
                 <p class="product-description">{{ product.description }}</p>
 
                 <div class="options">
@@ -82,7 +82,7 @@
                                 :value="size"
                                 :key="size"
                             >
-                                {{ size }} (+${{ price }})
+                            {{ size }} {{price !== null ? `(+$${price})` : ""}} 
                             </option>
                         </select>
                         <div v-else class="select-placeholder"></div>
@@ -246,8 +246,7 @@ const prevImage = () => {
 
 const removeImage = () => {
     imageUrl.value = null
-    product.value.imgs.shift()
-    --currentImageIndex.value
+    product.value.imgs.pop()
     currentImageIndex.value = Math.max(0, Math.min(product.value.imgs.length - 1, currentImageIndex.value))
 }
 
@@ -265,9 +264,10 @@ const handleFileUpload = (event) => {
     if (!file || file.size > MAX_IMAGE_SIZE || file.type.substring(0, 6) != "image/") return;
     const url = URL.createObjectURL(file)
 
-    product.value.imgs.unshift(url)
+    product.value.imgs.push(url)
     imageUrl.value = url
-
+    
+    currentImageIndex.value = product.value.imgs.length - 1
 }
 
 const incrementQuantity = () => {
@@ -309,18 +309,18 @@ const asyncRead = async (reader, url_blob) => {
 const addToCart = async () => {
     const reader = new FileReader()
     for (let i = 0; i<quantity.value; ++i) {
-        let fallback = null
+        let custom = null
         if (imageUrl.value) {
             const blob = await axios.get(imageUrl.value, {responseType: "blob"})
-            fallback = await asyncRead(reader, blob.data)
-            imageUrl.value = fallback
+            custom = await asyncRead(reader, blob.data)
+            imageUrl.value = custom
         }
 
         dispatch(cartAdd({
             product: product.value.name,
             size: selectedSize.value,
-            price: product.value.starting_p + product.value.sizes[selectedSize.value],
-            image: fallback ?? product.value.imgs[0],
+            price: product.value.getPrice(selectedSize.value),
+            image: custom ?? product.value.imgs[0],
         })) 
     }
 
