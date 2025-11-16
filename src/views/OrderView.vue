@@ -36,6 +36,7 @@ import Section from "@/components/Section.vue"
 import Divider from "@/components/Divider.vue"
 import axios from "axios"
 import {ref, onMounted} from "vue"
+import Product from "@/js/Product.js"
 
 const router = useRouter()
 
@@ -46,40 +47,6 @@ defineProps({
     }
 })
 
-class Product {
-    #starting_p = 0
-
-    constructor(name, imgs = [], id, sizes = {}, starting_p, thumbnail = 0, allow_custom = false) {
-        this.name = name
-        this.imgs = imgs
-        this.thumbnail = thumbnail 
-        this.id = id
-        this.sizes = sizes
-        this.starting_p = starting_p
-        this.actual_starting_p = starting_p + Object.values(this.sizes).sort()[0]
-        this.allow_custom = allow_custom
-    }
-
-    get startingPrice() {
-        return this.actual_starting_p
-    }
-
-    get imgThumbnail() {
-        return this.imgs[this.thumbnail]
-    }
-
-    getPrice(size) {
-        return this.starting_p + this.sizes[size]
-    }
-}
-
-const CuttingBoards = new Product("Cutting Board", [
-    "https://avatars.githubusercontent.com/u/61606770?v=4", 
-    "https://i.ytimg.com/vi/8p-hs-5tKmM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBIJF1_RtUZ4srWnx40bv2b-fQKsg"],
-    0, {"small": 5, "medium": 10, "large": 15}, 15, 0, true
-)
-
-window.products = [CuttingBoards]
 
 const products = ref({}) 
 onMounted(async () => {

@@ -185,8 +185,9 @@ import { ref, computed, onMounted } from "vue"
 import { useRoute } from "vue-router"
 import axios from "axios"
 import { useSelector, useDispatch } from "@reduxjs/vue-redux"
-import { add as cartAdd, remove as cartRemove } from "../js/cart-slice.js"
-import { send as notifSend, close as notifClose } from "../js/notif-slice.js"
+import { add as cartAdd, remove as cartRemove } from "@/js/cart-slice.js"
+import { send as notifSend, close as notifClose } from "@/js/notif-slice.js"
+import Product from "@/js/Product.js"
 
 const route = useRoute()
 const productId = parseInt(route.params.id)
@@ -220,7 +221,8 @@ const productLoaded = computed(() => {
 onMounted(async () => {
     try {
         //const res = await axios.get(`http://localhost:3001/api/products/${productId}`)
-        product.value = window.products.find(e => e.id == productId) 
+        product.value = window.products.find(e => e.id == productId)
+        console.log(product.value, product.value instanceof Product)
         selectedSize.value = Object.keys(product.value.sizes)[0] 
     } catch (err) {
         console.error("Failed to fetch product:", err)

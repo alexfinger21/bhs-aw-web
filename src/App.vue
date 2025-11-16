@@ -79,9 +79,10 @@
 </template>
 
 <script setup>
-    import NotificationBar from "./components/NotificationBar.vue"
+    import NotificationBar from "@/components/NotificationBar.vue"
     import { ref } from 'vue'
     import { useSelector } from "@reduxjs/vue-redux"
+    import Product from "@/js/Product.js"
 
     const notif = useSelector(state => state.notif)
     console.log(notif.value)
@@ -95,4 +96,12 @@
     const navClick = () => {
         menuActive.value = false
     }
+
+    const CuttingBoards = new Product("Cutting Board", [
+        "https://avatars.githubusercontent.com/u/61606770?v=4", 
+        "https://i.ytimg.com/vi/8p-hs-5tKmM/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLBIJF1_RtUZ4srWnx40bv2b-fQKsg"],
+        0, {"small": 5, "medium": 10, "large": 15}, 15, 0, true
+    )
+
+    window.products = [CuttingBoards]
 </script>
